@@ -1,0 +1,45 @@
+name: poppunk-poppipe
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  # Core dependencies
+  - python=3.9
+  - nextflow>=21.04.0
+  
+  # PopPUNK dependencies
+  - poppunk=2.7.5
+  - mash=2.3
+  - networkx
+  - pandas
+  - numpy
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  
+  # PopPIPE dependencies
+  - pp-sketchlib
+  - ska2
+  - iqtree>=2.0
+  - gubbins
+  - rapidnj
+  - r-base=4.1
+  - r-fastbaps
+  - r-ape
+  - r-phytools
+  - r-ggtree
+  - r-ggplot2
+  - r-dplyr
+  - r-tidyr
+  
+  # Additional utilities
+  - biopython
+  - dendropy
+  - ete3
+  - pip
+  
+  # Pip dependencies
+  - pip:
+    - microreact-api

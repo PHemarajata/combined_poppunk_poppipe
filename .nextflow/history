@@ -1,0 +1,4 @@
+2025-07-05 15:41:08	47s	scruffy_gates	ERR	978c755289d723ecd77b3694fba587c6	d6669822-f6b0-489c-8543-5dd285d5c396	nextflow run main.nf --input ./test_data --resultsDir ./test_results --threads 8 --ram '32 GB' -profile test
+2025-07-05 15:48:36	6.9s	sad_bhaskara	ERR	978c755289d723ecd77b3694fba587c6	d6669822-f6b0-489c-8543-5dd285d5c396	nextflow run main.nf --input ./test_data --resultsDir ./test_results --threads 8 --ram '32 GB' -profile test -resume
+2025-07-05 15:50:20	7.5s	exotic_marconi	ERR	978c755289d723ecd77b3694fba587c6	c6ac6631-f433-435d-a91b-66d407ff9f32	nextflow run main.nf --input ./test_data --resultsDir ./test_results --threads 8 --ram '32 GB' -profile test
+2025-07-05 16:25:56	1m 7s	tiny_lamarr	ERR	978c755289d723ecd77b3694fba587c6	a3884c5f-9e17-4616-856b-14a11dccd54f	nextflow run main.nf --input ./test_data --resultsDir ./test_results --threads 8 --ram '32 GB' -profile test
