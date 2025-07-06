@@ -1,0 +1,43 @@
+PopPUNK (POPulation Partitioning Using Nucleotide Kmers)
+	(with backend: sketchlib v2.1.4
+	 sketchlib: /opt/conda/envs/poppunk-env/lib/python3.12/site-packages/pp_sketchlib.cpython-312-x86_64-linux-gnu.so)
+
+Graph-tools OpenMP parallelisation enabled: with 2 threads
+Mode: Building new database from input sequences
+Sketching 21 genomes using 2 thread(s)
+Progress (CPU): 0 / 21Progress (CPU): 2 / 21Progress (CPU): 4 / 21Progress (CPU): 6 / 21Progress (CPU): 8 / 21Progress (CPU): 10 / 21Progress (CPU): 12 / 21Progress (CPU): 14 / 21Progress (CPU): 16 / 21Progress (CPU): 18 / 21Progress (CPU): 20 / 21Progress (CPU): 21 / 21
+Writing sketches to file
+NOTE: genome_cluster1_1 required densification
+NOTE: genome_cluster1_2 required densification
+NOTE: genome_cluster1_3 required densification
+NOTE: genome_cluster1_4 required densification
+NOTE: genome_cluster1_5 required densification
+NOTE: genome_cluster1_6 required densification
+NOTE: genome_cluster1_7 required densification
+NOTE: genome_cluster1_8 required densification
+NOTE: genome_cluster2_1 required densification
+NOTE: genome_cluster2_2 required densification
+NOTE: genome_cluster2_3 required densification
+NOTE: genome_cluster2_4 required densification
+NOTE: genome_cluster2_5 required densification
+NOTE: genome_cluster2_6 required densification
+NOTE: genome_cluster3_1 required densification
+NOTE: genome_cluster3_2 required densification
+NOTE: genome_cluster3_3 required densification
+NOTE: genome_cluster3_4 required densification
+NOTE: outlier_1 required densification
+NOTE: outlier_2 required densification
+NOTE: outlier_3 required densification
+Calculating random match chances using Monte Carlo
+Calculating distances using 2 thread(s)
+Progress (CPU): 0.0%Progress (CPU): 0.4%Progress (CPU): 0.8%Progress (CPU): 1.2%Progress (CPU): 1.6%Progress (CPU): 2.0%Progress (CPU): 2.4%Progress (CPU): 2.8%Progress (CPU): 3.2%Progress (CPU): 3.6%Progress (CPU): 4.0%Progress (CPU): 4.4%Progress (CPU): 4.8%Progress (CPU): 5.2%Progress (CPU): 5.6%Progress (CPU): 6.0%Progress (CPU): 6.4%Progress (CPU): 6.8%Progress (CPU): 7.2%Progress (CPU): 7.6%/home/phemarajata/combined_poppunk_poppipe/work/9a/a315d462e5dd25753d09178dbb8e03/.command.sh: line 41:    96 Segmentation fault      (core dumped) poppunk --create-db --r-files staged_files.list --output poppunk_db --threads 2
+PopPUNK (POPulation Partitioning Using Nucleotide Kmers)
+	(with backend: sketchlib v2.1.4
+	 sketchlib: /opt/conda/envs/poppunk-env/lib/python3.12/site-packages/pp_sketchlib.cpython-312-x86_64-linux-gnu.so)
+
+Graph-tools OpenMP parallelisation enabled: with 2 threads
+Mode: Building new database from input sequences
+Looking for existing sketches in poppunk_db/poppunk_db.h5
+Calculating random match chances using Monte Carlo
+Calculating distances using 2 thread(s)
+Progress (CPU): 0.0%Progress (CPU): 0.4%Progress (CPU): 0.8%Progress (CPU): 1.2%Progress (CPU): 1.6%Progress (CPU): 2.0%Progress (CPU): 2.4%Progress (CPU): 2.8%Progress (CPU): 3.2%Progress (CPU): 3.6%Progress (CPU): 4.0%Progress (CPU): 4.4%Progress (CPU): 4.8%Progress (CPU): 5.2%Progress (CPU): 5.6%Progress (CPU): 6.0%Progress (CPU): 6.4%Progress (CPU): 6.8%Progress (CPU): 7.2%Progress (CPU): 7.6%Progress (CPU): 8.0%Progress (CPU): 8.4%Progress (CPU): 8.8%Progress (CPU): 9.2%Progress (CPU): 9.6%Progress (CPU): 10.0%Progress (CPU): 10.4%Progress (CPU): 10.8%Progress (CPU): 11.2%Progress (CPU): 11.6%/home/phemarajata/combined_poppunk_poppipe/work/9a/a315d462e5dd25753d09178dbb8e03/.command.sh: line 41:   234 Segmentation fault      (core dumped) poppunk --create-db --r-files staged_files.list --output poppunk_db --threads 2

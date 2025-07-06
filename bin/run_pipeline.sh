@@ -6,7 +6,7 @@
 set -e
 
 # Default values
-PROFILE="standard"
+PROFILE="local"
 INPUT_DIR=""
 OUTPUT_DIR="./results"
 CONFIG_FILE=""

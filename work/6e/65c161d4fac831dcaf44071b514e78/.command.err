@@ -1,0 +1,69 @@
+PopPUNK: assign
+	(with backend: sketchlib v2.1.4
+	 sketchlib: /opt/conda/envs/poppunk-env/lib/python3.12/site-packages/pp_sketchlib.cpython-312-x86_64-linux-gnu.so)
+Mode: Assigning clusters of query sequences
+
+
+Graph-tools OpenMP parallelisation enabled: with 8 threads
+Traceback (most recent call last):
+  File "/opt/conda/envs/poppunk-env/bin/poppunk_assign", line 11, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/assign.py", line 217, in main
+    assign_query(dbFuncs,
+  File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/assign.py", line 292, in assign_query
+    qNames = constructDatabase(q_files,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/sketchlib.py", line 400, in constructDatabase
+    names, sequences = readRfile(assemblyList)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/utils.py", line 469, in readRfile
+    names, sequences = [list(r_tuple) for r_tuple in tuples]
+    ^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 0)
+PopPUNK: assign
+	(with backend: sketchlib v2.1.4
+	 sketchlib: /opt/conda/envs/poppunk-env/lib/python3.12/site-packages/pp_sketchlib.cpython-312-x86_64-linux-gnu.so)
+Mode: Assigning clusters of query sequences
+
+
+Graph-tools OpenMP parallelisation enabled: with 2 threads
+Traceback (most recent call last):
+  File "/opt/conda/envs/poppunk-env/bin/poppunk_assign", line 11, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/assign.py", line 217, in main
+    assign_query(dbFuncs,
+  File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/assign.py", line 292, in assign_query
+    qNames = constructDatabase(q_files,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/sketchlib.py", line 400, in constructDatabase
+    names, sequences = readRfile(assemblyList)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/utils.py", line 469, in readRfile
+    names, sequences = [list(r_tuple) for r_tuple in tuples]
+    ^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 0)
+PopPUNK: assign
+	(with backend: sketchlib v2.1.4
+	 sketchlib: /opt/conda/envs/poppunk-env/lib/python3.12/site-packages/pp_sketchlib.cpython-312-x86_64-linux-gnu.so)
+Mode: Assigning clusters of query sequences
+
+
+Graph-tools OpenMP parallelisation enabled: with 1 threads
+Traceback (most recent call last):
+  File "/opt/conda/envs/poppunk-env/bin/poppunk_assign", line 11, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/assign.py", line 217, in main
+    assign_query(dbFuncs,
+  File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/assign.py", line 292, in assign_query
+    qNames = constructDatabase(q_files,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/sketchlib.py", line 400, in constructDatabase
+    names, sequences = readRfile(assemblyList)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/utils.py", line 469, in readRfile
+    names, sequences = [list(r_tuple) for r_tuple in tuples]
+    ^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 2, got 0)

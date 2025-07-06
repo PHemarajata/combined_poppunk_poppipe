@@ -1,0 +1,671 @@
+#!/bin/bash
+### ---
+### name: 'VALIDATE_FASTA (validate_fasta)'
+### container: 'python:3.9'
+### outputs:
+### - 'valid_files.list'
+### - 'validation_report.txt'
+### ...
+set -e
+set -u
+NXF_DEBUG=${NXF_DEBUG:=0}; [[ $NXF_DEBUG > 1 ]] && set -x
+NXF_ENTRY=${1:-nxf_main}
+
+nxf_tree() {
+    local pid=$1
+
+    declare -a ALL_CHILDREN
+    while read P PP;do
+        ALL_CHILDREN[$PP]+=" $P"
+    done < <(ps -e -o pid= -o ppid=)
+
+    pstat() {
+        local x_pid=$1
+        local STATUS=$(2> /dev/null < /proc/$1/status grep -E 'Vm|ctxt')
+
+        if [ $? = 0 ]; then
+        local  x_vsz=$(echo "$STATUS" | grep VmSize | awk '{print $2}' || echo -n '0')
+        local  x_rss=$(echo "$STATUS" | grep VmRSS | awk '{print $2}' || echo -n '0')
+        local x_peak=$(echo "$STATUS" | grep -E 'VmPeak|VmHWM' | sed 's/^.*:\s*//' | sed 's/[\sa-zA-Z]*$//' | tr '\n' ' ' || echo -n '0 0')
+        local x_pmem=$(awk -v rss=$x_rss -v mem_tot=$mem_tot 'BEGIN {printf "%.0f", rss/mem_tot*100*10}' || echo -n '0')
+        local vol_ctxt=$(echo "$STATUS" | grep '\bvoluntary_ctxt_switches' | awk '{print $2}' || echo -n '0')
+        local inv_ctxt=$(echo "$STATUS" | grep '\bnonvoluntary_ctxt_switches' | awk '{print $2}' || echo -n '0')
+        cpu_stat[x_pid]="$x_pid $x_pmem $x_vsz $x_rss $x_peak $vol_ctxt $inv_ctxt"
+        fi
+    }
+
+    pwalk() {
+        pstat $1
+        for i in ${ALL_CHILDREN[$1]:=}; do pwalk $i; done
+    }
+
+    pwalk $1
+}
+
+nxf_stat() {
+    cpu_stat=()
+    nxf_tree $1
+
+    declare -a sum=(0 0 0 0 0 0 0 0)
+    local pid
+    local i
+    for pid in "${!cpu_stat[@]}"; do
+        local row=(${cpu_stat[pid]})
+        [ $NXF_DEBUG = 1 ] && echo "++ stat mem=${row[*]}"
+        for i in "${!row[@]}"; do
+        if [ $i != 0 ]; then
+            sum[i]=$((sum[i]+row[i]))
+        fi
+        done
+    done
+
+    [ $NXF_DEBUG = 1 ] && echo -e "++ stat SUM=${sum[*]}"
+
+    for i in {1..7}; do
+        if [ ${sum[i]} -lt ${cpu_peak[i]} ]; then
+            sum[i]=${cpu_peak[i]}
+        else
+            cpu_peak[i]=${sum[i]}
+        fi
+    done
+
+    [ $NXF_DEBUG = 1 ] && echo -e "++ stat PEAK=${sum[*]}\n"
+    nxf_stat_ret=(${sum[*]})
+}
+
+nxf_mem_watch() {
+    set -o pipefail
+    local pid=$1
+    local trace_file=.command.trace
+    local count=0;
+    declare -a cpu_stat=(0 0 0 0 0 0 0 0)
+    declare -a cpu_peak=(0 0 0 0 0 0 0 0)
+    local mem_tot=$(< /proc/meminfo grep MemTotal | awk '{print $2}')
+    local timeout
+    local DONE
+    local STOP=''
+
+    [ $NXF_DEBUG = 1 ] && nxf_sleep 0.2 && ps fx
+
+    while true; do
+        nxf_stat $pid
+        if [ $count -lt 10 ]; then timeout=1;
+        elif [ $count -lt 120 ]; then timeout=5;
+        else timeout=30;
+        fi
+        read -t $timeout -r DONE || true
+        [[ $DONE ]] && break
+        if [ ! -e /proc/$pid ]; then
+            [ ! $STOP ] && STOP=$(nxf_date)
+            [ $(($(nxf_date)-STOP)) -gt 10000 ] && break
+        fi
+        count=$((count+1))
+    done
+
+    printf "%s\n" \
+        "%mem=${nxf_stat_ret[1]}" \
+        "vmem=${nxf_stat_ret[2]}" \
+        "rss=${nxf_stat_ret[3]}" \
+        "peak_vmem=${nxf_stat_ret[4]}" \
+        "peak_rss=${nxf_stat_ret[5]}" \
+        "vol_ctxt=${nxf_stat_ret[6]}" \
+        "inv_ctxt=${nxf_stat_ret[7]}" >> "$trace_file" || >&2 echo "Error: Failed to append to file: $trace_file"
+}
+
+nxf_write_trace() {
+    printf "%s\n" \
+        "nextflow.trace/v2" \
+        "realtime=$wall_time" \
+        "%cpu=$ucpu" \
+        "cpu_model=$cpu_model" \
+        "rchar=${io_stat1[0]}" \
+        "wchar=${io_stat1[1]}" \
+        "syscr=${io_stat1[2]}" \
+        "syscw=${io_stat1[3]}" \
+        "read_bytes=${io_stat1[4]}" \
+        "write_bytes=${io_stat1[5]}" >| "$trace_file" || >&2 echo "Error: Failed to write to file: $trace_file"
+}
+
+nxf_trace_mac() {
+    local start_millis=$(nxf_date)
+
+    /bin/bash -ue /home/phemarajata/combined_poppunk_poppipe/work/a6/afd153b068063e5158a4d251d7d820/.command.sh
+
+    local end_millis=$(nxf_date)
+    local wall_time=$((end_millis-start_millis))
+    local ucpu=''
+    local cpu_model=''
+    local io_stat1=('' '' '' '' '' '')
+    nxf_write_trace
+}
+
+nxf_fd() {
+    local FD=11
+    while [ -e /proc/$$/fd/$FD ]; do FD=$((FD+1)); done
+    echo $FD
+}
+
+nxf_trace_linux() {
+    local pid=$$
+    command -v ps &>/dev/null || { >&2 echo "Command 'ps' required by nextflow to collect task metrics cannot be found"; exit 1; }
+    local num_cpus=$(< /proc/cpuinfo grep '^processor' -c)
+    local cpu_model=$(< /proc/cpuinfo grep '^model name' | head -n 1 | awk 'BEGIN{FS="\t: "} { print $2 }')
+    local tot_time0=$(grep '^cpu ' /proc/stat | awk '{sum=$2+$3+$4+$5+$6+$7+$8+$9; printf "%.0f",sum}')
+    local cpu_time0=$(2> /dev/null < /proc/$pid/stat awk '{printf "%.0f", ($16+$17)*10 }' || echo -n 'X')
+    local io_stat0=($(2> /dev/null < /proc/$pid/io sed 's/^.*:\s*//' | head -n 6 | tr '\n' ' ' || echo -n '0 0 0 0 0 0'))
+    local start_millis=$(nxf_date)
+    trap 'kill $mem_proc' ERR
+    
+    /bin/bash -ue /home/phemarajata/combined_poppunk_poppipe/work/a6/afd153b068063e5158a4d251d7d820/.command.sh &
+    local task=$!
+
+    mem_fd=$(nxf_fd)
+    eval "exec $mem_fd> >(nxf_mem_watch $task)"
+    local mem_proc=$!
+
+    wait $task
+
+    local end_millis=$(nxf_date)
+    local tot_time1=$(grep '^cpu ' /proc/stat | awk '{sum=$2+$3+$4+$5+$6+$7+$8+$9; printf "%.0f",sum}')
+    local cpu_time1=$(2> /dev/null < /proc/$pid/stat awk '{printf "%.0f", ($16+$17)*10 }' || echo -n 'X')
+    local ucpu=$(awk -v p1=$cpu_time1 -v p0=$cpu_time0 -v t1=$tot_time1 -v t0=$tot_time0 -v n=$num_cpus 'BEGIN { pct=(p1-p0)/(t1-t0)*100*n; printf("%.0f", pct>0 ? pct : 0) }' )
+
+    local io_stat1=($(2> /dev/null < /proc/$pid/io sed 's/^.*:\s*//' | head -n 6 | tr '\n' ' ' || echo -n '0 0 0 0 0 0'))
+    local i
+    for i in {0..5}; do
+        io_stat1[i]=$((io_stat1[i]-io_stat0[i]))
+    done
+
+    local wall_time=$((end_millis-start_millis))
+    [ $NXF_DEBUG = 1 ] && echo "+++ STATS %CPU=$ucpu TIME=$wall_time I/O=${io_stat1[*]}"
+
+    printf "%s\n" \
+        "nextflow.trace/v2" \
+        "realtime=$wall_time" \
+        "%cpu=$ucpu" \
+        "cpu_model=$cpu_model" \
+        "rchar=${io_stat1[0]}" \
+        "wchar=${io_stat1[1]}" \
+        "syscr=${io_stat1[2]}" \
+        "syscw=${io_stat1[3]}" \
+        "read_bytes=${io_stat1[4]}" \
+        "write_bytes=${io_stat1[5]}" >| "$trace_file" || >&2 echo "Error: Failed to write to file: $trace_file"
+
+    [ -e /proc/$mem_proc ] && eval "echo 'DONE' >&$mem_fd" || true
+    wait $mem_proc 2>/dev/null || true
+    while [ -e /proc/$mem_proc ]; do nxf_sleep 0.1; done
+    [ ${NXF_OWNER:=''} ] && (shopt -s extglob; GLOBIGNORE='..'; chown -fR --from root $NXF_OWNER /home/phemarajata/combined_poppunk_poppipe/work/a6/afd153b068063e5158a4d251d7d820/{*,.*}) || true
+}
+
+nxf_trace() {
+    local trace_file=.command.trace
+    touch $trace_file
+    if [[ $(uname) = Darwin ]]; then
+        nxf_trace_mac
+    else
+        nxf_trace_linux
+    fi
+}
+nxf_container_env() {
+cat << EOF
+export PATH="\$PATH:/home/phemarajata/combined_poppunk_poppipe/bin"
+EOF
+}
+
+nxf_sleep() {
+  sleep $1 2>/dev/null || sleep 1;
+}
+
+nxf_date() {
+    local ts=$(date +%s%3N);
+    if [[ ${#ts} == 10 ]]; then echo ${ts}000
+    elif [[ $ts == *%3N ]]; then echo ${ts/\%3N/000}
+    elif [[ $ts == *3N ]]; then echo ${ts/3N/000}
+    elif [[ ${#ts} == 13 ]]; then echo $ts
+    else echo "Unexpected timestamp value: $ts"; exit 1
+    fi
+}
+
+nxf_env() {
+    echo '============= task environment ============='
+    env | sort | sed "s/\(.*\)AWS\(.*\)=\(.\{6\}\).*/\1AWS\2=\3xxxxxxxxxxxxx/"
+    echo '============= task output =================='
+}
+
+nxf_kill() {
+    declare -a children
+    while read P PP;do
+        children[$PP]+=" $P"
+    done < <(ps -e -o pid= -o ppid=)
+
+    kill_all() {
+        [[ $1 != $$ ]] && kill $1 2>/dev/null || true
+        for i in ${children[$1]:=}; do kill_all $i; done
+    }
+
+    kill_all $1
+}
+
+nxf_mktemp() {
+    local base=${1:-/tmp}
+    mkdir -p "$base"
+    if [[ $(uname) = Darwin ]]; then mktemp -d $base/nxf.XXXXXXXXXX
+    else TMPDIR="$base" mktemp -d -t nxf.XXXXXXXXXX
+    fi
+}
+
+nxf_fs_copy() {
+  local source=$1
+  local target=$2
+  local basedir=$(dirname $1)
+  mkdir -p $target/$basedir
+  cp -fRL $source $target/$basedir
+}
+
+nxf_fs_move() {
+  local source=$1
+  local target=$2
+  local basedir=$(dirname $1)
+  mkdir -p $target/$basedir
+  mv -f $source $target/$basedir
+}
+
+nxf_fs_rsync() {
+  rsync -rRl $1 $2
+}
+
+nxf_fs_rclone() {
+  rclone copyto $1 $2/$1
+}
+
+nxf_fs_fcp() {
+  fcp $1 $2/$1
+}
+
+on_exit() {
+    local last_err=$?
+    local exit_status=${nxf_main_ret:=0}
+    [[ ${exit_status} -eq 0 && ${nxf_unstage_ret:=0} -ne 0 ]] && exit_status=${nxf_unstage_ret:=0}
+    [[ ${exit_status} -eq 0 && ${last_err} -ne 0 ]] && exit_status=${last_err}
+    printf -- $exit_status > /home/phemarajata/combined_poppunk_poppipe/work/a6/afd153b068063e5158a4d251d7d820/.exitcode
+    set +u
+    docker rm $NXF_BOXID &>/dev/null || true
+    exit $exit_status
+}
+
+on_term() {
+    set +e
+    docker stop $NXF_BOXID
+}
+
+nxf_launch() {
+    docker run -i --cpu-shares 4096 --memory 8192m -e "NXF_TASK_WORKDIR" -e "NXF_DEBUG=${NXF_DEBUG:=0}" -e "NXF_OWNER=$(id -u):$(id -g)" -v $(nxf_mktemp):/tmp -v /home/phemarajata:/home/phemarajata -w "$NXF_TASK_WORKDIR" --user $(id -u):$(id -g) --name $NXF_BOXID python:3.9 /bin/bash -c "eval $(nxf_container_env); /bin/bash /home/phemarajata/combined_poppunk_poppipe/work/a6/afd153b068063e5158a4d251d7d820/.command.run nxf_trace"
+}
+
+nxf_stage() {
+    true
+    # stage input files
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0179.fasta IP-0179.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0106.fasta IP-0106.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0126.fasta IP-0126.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0008.fasta IP-0008.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0011.fasta IE-0011.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0146.fasta IP-0146.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963561915_1.fasta GCA_963561915_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0028.fasta IP-0028.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963564975_1.fasta GCA_963564975_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963572615_1.fasta GCA_963572615_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963565015_1.fasta GCA_963565015_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0090.fasta IP-0090.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0113.fasta IP-0113.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0048.fasta IP-0048.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0070.fasta IP-0070.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0050.fasta IP-0050.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0015.fasta IP-0015.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_002110985_1_USA_Puerto_Rico.fasta GCF_002110985_1_USA_Puerto_Rico.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0173.fasta IP-0173.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0035.fasta IP-0035.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0153.fasta IP-0153.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0193.fasta IP-0193.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0133.fasta IP-0133.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_014712895_1_Laos.fasta GCF_014712895_1_Laos.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0023.fasta IP-0023.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012306.fasta ERS012306.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0043.fasta IP-0043.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0063.fasta IP-0063.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0083.fasta IP-0083.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963568785_1.fasta GCA_963568785_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963566475_1.fasta GCA_963566475_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0141.fasta IP-0141.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS013364.fasta ERS013364.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963562615_1.fasta GCA_963562615_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0161.fasta IP-0161.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0121.fasta IP-0121.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_000773235_1_Australia.fasta GCF_000773235_1_Australia.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012320.fasta ERS012320.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963562965_1.fasta GCA_963562965_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0181.fasta IP-0181.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0101.fasta IP-0101.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963563155_1.fasta GCA_963563155_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012358.fasta ERS012358.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0159.fasta IP-0159.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0199.fasta IP-0199.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0024.fasta IE-0024.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0004.fasta IE-0004.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0139.fasta IP-0139.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0119.fasta IP-0119.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0016.fasta IP-0016.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0154.fasta IP-0154.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963566495_1.fasta GCA_963566495_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0003.fasta IE-0003.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_014712935_1_Laos.fasta GCF_014712935_1_Laos.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963561835_1.fasta GCA_963561835_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0167.fasta IP-0167.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963568055_1.fasta GCA_963568055_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0003.fasta IP-0003.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963571475_1.fasta GCA_963571475_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0062.fasta IP-0062.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0138.fasta IP-0138.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0022.fasta IP-0022.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963560675_1.fasta GCA_963560675_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS013343.fasta ERS013343.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963569685_1.fasta GCA_963569685_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963567935_1.fasta GCA_963567935_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0095.fasta IP-0095.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0055.fasta IP-0055.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963560735_1.fasta GCA_963560735_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0120.fasta IP-0120.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0160.fasta IP-0160.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0009.fasta IE-0009.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0125.fasta IP-0125.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0010.fasta IP-0010.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS013348.fasta ERS013348.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0178.fasta IP-0178.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0068.fasta IP-0068.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0027.fasta IP-0027.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0096.fasta IP-0096.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0166.fasta IP-0166.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0056.fasta IP-0056.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0194.fasta IP-0194.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963566855_1.fasta GCA_963566855_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0114.fasta IP-0114.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0064.fasta IP-0064.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0044.fasta IP-0044.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0034.fasta IP-0034.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0094.fasta IP-0094.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0152.fasta IP-0152.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0087.fasta IP-0087.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_014712955_1_Laos.fasta GCF_014712955_1_Laos.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0182.fasta IP-0182.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0172.fasta IP-0172.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_025847905_1_Viet_Nam.fasta GCF_025847905_1_Viet_Nam.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0067.fasta IP-0067.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0122.fasta IP-0122.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0057.fasta IP-0057.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0195.fasta IP-0195.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0005.fasta IE-0005.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_000774495_1_Australia.fasta GCF_000774495_1_Australia.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_001207785_2_Malaysia.fasta GCF_001207785_2_Malaysia.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963565565_1.fasta GCA_963565565_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0175.fasta IP-0175.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0145.fasta IP-0145.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963566635_1.fasta GCA_963566635_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963570025_1.fasta GCA_963570025_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963565125_1.fasta GCA_963565125_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0115.fasta IP-0115.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_014713085_1_Laos.fasta GCF_014713085_1_Laos.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963569795_1.fasta GCA_963569795_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012332.fasta ERS012332.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963562795_1.fasta GCA_963562795_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0037.fasta IP-0037.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0012.fasta IE-0012.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0202.fasta IP-0202.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0147.fasta IP-0147.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0029.fasta IP-0029.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_002111145_1_USA_Arizona_ex_Costa_Rica.fasta GCF_002111145_1_USA_Arizona_ex_Costa_Rica.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0014.fasta IP-0014.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0009.fasta IP-0009.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0091.fasta IP-0091.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0124.fasta IP-0124.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963566175_1.fasta GCA_963566175_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0071.fasta IP-0071.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963561435_1.fasta GCA_963561435_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0011.fasta IP-0011.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0006.fasta IP-0006.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0089.fasta IP-0089.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0036.fasta IP-0036.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0092.fasta IP-0092.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0197.fasta IP-0197.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963560915_1.fasta GCA_963560915_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0118.fasta IP-0118.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0012.fasta IP-0012.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0042.fasta IP-0042.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963563525_1.fasta GCA_963563525_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0168.fasta IP-0168.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0150.fasta IP-0150.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0065.fasta IP-0065.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0010.fasta IE-0010.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0100.fasta IP-0100.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0180.fasta IP-0180.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0007.fasta IP-0007.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963571005_1.fasta GCA_963571005_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963568705_1.fasta GCA_963568705_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0117.fasta IP-0117.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0123.fasta IP-0123.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0088.fasta IP-0088.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0093.fasta IP-0093.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0013.fasta IP-0013.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0006.fasta IE-0006.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012330.fasta ERS012330.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0151.fasta IP-0151.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_014712835_1_Laos.fasta GCF_014712835_1_Laos.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0059.fasta IP-0059.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0174.fasta IP-0174.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0041.fasta IP-0041.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963563715_1.fasta GCA_963563715_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0169.fasta IP-0169.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963564305_1.fasta GCA_963564305_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0021.fasta IE-0021.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0116.fasta IP-0116.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0136.fasta IP-0136.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0201.fasta IP-0201.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0018.fasta IP-0018.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0080.fasta IP-0080.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0103.fasta IP-0103.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0058.fasta IP-0058.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963561215_1.fasta GCA_963561215_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0038.fasta IP-0038.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0060.fasta IP-0060.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963571975_1.fasta GCA_963571975_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0005.fasta IP-0005.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_003268105_1_Viet_Nam.fasta GCF_003268105_1_Viet_Nam.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS013346.fasta ERS013346.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0040.fasta IP-0040.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0025.fasta IP-0025.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963561975_1.fasta GCA_963561975_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963573225_1.fasta GCA_963573225_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0019.fasta IE-0019.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0098.fasta IP-0098.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0020.fasta IP-0020.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0007.fasta IE-0007.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0196.fasta IP-0196.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0078.fasta IP-0078.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0176.fasta IP-0176.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963566765_1.fasta GCA_963566765_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0086.fasta IP-0086.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0156.fasta IP-0156.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0066.fasta IP-0066.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0001.fasta IE-0001.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_003268075_1_Viet_Nam.fasta GCF_003268075_1_Viet_Nam.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963569325_1.fasta GCA_963569325_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0184.fasta IP-0184.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/SRR12527885_contigs.fasta SRR12527885_contigs.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0046.fasta IP-0046.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012303.fasta ERS012303.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012363.fasta ERS012363.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0164.fasta IP-0164.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_014712915_1_Laos.fasta GCF_014712915_1_Laos.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0026.fasta IP-0026.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0144.fasta IP-0144.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963563065_1.fasta GCA_963563065_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0079.fasta IP-0079.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0013.fasta IE-0013.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0072.fasta IP-0072.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0026.fasta IE-0026.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0177.fasta IP-0177.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963562695_1.fasta GCA_963562695_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963560945_1.fasta GCA_963560945_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0148.fasta IP-0148.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0108.fasta IP-0108.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0032.fasta IP-0032.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0130.fasta IP-0130.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0085.fasta IP-0085.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0170.fasta IP-0170.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963560585_1.fasta GCA_963560585_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0045.fasta IP-0045.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012362.fasta ERS012362.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0183.fasta IP-0183.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012316.fasta ERS012316.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0143.fasta IP-0143.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0102.fasta IP-0102.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0033.fasta IP-0033.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0137.fasta IP-0137.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0073.fasta IP-0073.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0061.fasta IP-0061.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS013354.fasta ERS013354.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963566085_1.fasta GCA_963566085_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0039.fasta IP-0039.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0131.fasta IP-0131.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0004.fasta IP-0004.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0171.fasta IP-0171.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963570105_1.fasta GCA_963570105_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0014.fasta IE-0014.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0021.fasta IP-0021.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963563475_1.fasta GCA_963563475_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0189.fasta IP-0189.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0109.fasta IP-0109.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0149.fasta IP-0149.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0192.fasta IP-0192.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0018.fasta IE-0018.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0084.fasta IP-0084.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0054.fasta IP-0054.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0074.fasta IP-0074.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0162.fasta IP-0162.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0024.fasta IP-0024.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0097.fasta IP-0097.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0132.fasta IP-0132.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0142.fasta IP-0142.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963566695_1.fasta GCA_963566695_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0112.fasta IP-0112.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0077.fasta IP-0077.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0185.fasta IP-0185.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012307.fasta ERS012307.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0015.fasta IE-0015.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963561855_1.fasta GCA_963561855_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0155.fasta IP-0155.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0200.fasta IP-0200.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0165.fasta IP-0165.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0135.fasta IP-0135.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0188.fasta IP-0188.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963569365_1.fasta GCA_963569365_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963563635_1.fasta GCA_963563635_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0017.fasta IP-0017.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0127.fasta IP-0127.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0107.fasta IP-0107.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS013352.fasta ERS013352.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0069.fasta IP-0069.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0104.fasta IP-0104.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0049.fasta IP-0049.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0051.fasta IP-0051.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0031.fasta IP-0031.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963573095_1.fasta GCA_963573095_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0134.fasta IP-0134.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0099.fasta IP-0099.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0082.fasta IP-0082.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_002110925_1_USA_Texas.fasta GCF_002110925_1_USA_Texas.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_014712775_1_Laos.fasta GCF_014712775_1_Laos.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0187.fasta IP-0187.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963565485_1.fasta GCA_963565485_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963561075_1.fasta GCA_963561075_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0016.fasta IE-0016.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963565395_1.fasta GCA_963565395_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCF_009827035_1_Viet_Nam.fasta GCF_009827035_1_Viet_Nam.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0128.fasta IP-0128.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963568885_1.fasta GCA_963568885_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012312.fasta ERS012312.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963567325_1.fasta GCA_963567325_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0158.fasta IP-0158.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012309.fasta ERS012309.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0002.fasta IP-0002.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0052.fasta IP-0052.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0075.fasta IP-0075.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0110.fasta IP-0110.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0105.fasta IP-0105.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0140.fasta IP-0140.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0190.fasta IP-0190.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0022.fasta IE-0022.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0163.fasta IP-0163.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963566625_1.fasta GCA_963566625_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0030.fasta IP-0030.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0191.fasta IP-0191.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963564375_1.fasta GCA_963564375_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IE-0017.fasta IE-0017.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963562655_1.fasta GCA_963562655_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0047.fasta IP-0047.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0053.fasta IP-0053.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963569645_1.fasta GCA_963569645_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0157.fasta IP-0157.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0019.fasta IP-0019.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012365.fasta ERS012365.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0186.fasta IP-0186.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0076.fasta IP-0076.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012370.fasta ERS012370.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0111.fasta IP-0111.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963570575_1.fasta GCA_963570575_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/ERS012313.fasta ERS012313.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0081.fasta IP-0081.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/GCA_963571055_1.fasta GCA_963571055_1.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0001.fasta IP-0001.fasta
+    ln -s /home/phemarajata/Downloads/bp_finalset/IP-0129.fasta IP-0129.fasta
+}
+
+nxf_unstage_outputs() {
+    true
+}
+
+nxf_unstage_controls() {
+    true
+}
+
+nxf_unstage() {
+    if [[ ${nxf_main_ret:=0} == 0 ]]; then
+        (set -e -o pipefail; (nxf_unstage_outputs | tee -a .command.out) 3>&1 1>&2 2>&3 | tee -a .command.err)
+        nxf_unstage_ret=$?
+    fi
+    nxf_unstage_controls
+}
+
+nxf_main() {
+    trap on_exit EXIT
+    trap on_term TERM INT USR2
+    trap '' USR1
+
+    [[ "${NXF_CHDIR:-}" ]] && cd "$NXF_CHDIR"
+    export NXF_BOXID="nxf-$(dd bs=18 count=1 if=/dev/urandom 2>/dev/null | base64 | tr +/ 0A | tr -d '\r\n')"
+    NXF_SCRATCH=''
+    [[ $NXF_DEBUG > 0 ]] && nxf_env
+    touch /home/phemarajata/combined_poppunk_poppipe/work/a6/afd153b068063e5158a4d251d7d820/.command.begin
+    set +u
+    set -u
+    [[ $NXF_SCRATCH ]] && cd $NXF_SCRATCH
+    export NXF_TASK_WORKDIR="$PWD"
+    nxf_stage
+
+    set +e
+    (set -o pipefail; (nxf_launch | tee .command.out) 3>&1 1>&2 2>&3 | tee .command.err) &
+    pid=$!
+    wait $pid || nxf_main_ret=$?
+    nxf_unstage
+}
+
+$NXF_ENTRY

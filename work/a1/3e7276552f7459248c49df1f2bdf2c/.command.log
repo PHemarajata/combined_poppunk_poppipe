@@ -1,0 +1,31 @@
+
+[notice] A new release of pip is available: 23.0.1 -> 25.1.1
+[notice] To update, run: pip install --upgrade pip
+Building similarity graph from MASH distances...
+Graph built with 21 nodes and 21 edges
+Found 21 connected components
+Component sizes: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+Largest component has 1 genomes
+Average component size: 1.0
+Component 1: 1 genomes -> selected 1 representatives
+Component 2: 1 genomes -> selected 1 representatives
+Component 3: 1 genomes -> selected 1 representatives
+Component 4: 1 genomes -> selected 1 representatives
+Component 5: 1 genomes -> selected 1 representatives
+Component 6: 1 genomes -> selected 1 representatives
+Component 7: 1 genomes -> selected 1 representatives
+Component 8: 1 genomes -> selected 1 representatives
+Component 9: 1 genomes -> selected 1 representatives
+Component 10: 1 genomes -> selected 1 representatives
+Component 11: 1 genomes -> selected 1 representatives
+Component 12: 1 genomes -> selected 1 representatives
+Component 13: 1 genomes -> selected 1 representatives
+Component 14: 1 genomes -> selected 1 representatives
+Component 15: 1 genomes -> selected 1 representatives
+Component 16: 1 genomes -> selected 1 representatives
+Component 17: 1 genomes -> selected 1 representatives
+Component 18: 1 genomes -> selected 1 representatives
+Component 19: 1 genomes -> selected 1 representatives
+Component 20: 1 genomes -> selected 1 representatives
+Component 21: 1 genomes -> selected 1 representatives
+Total genomes selected for PopPUNK modeling: 21
