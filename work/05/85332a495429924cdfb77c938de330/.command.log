@@ -1,9 +1,0 @@
-Sketching 322 valid FASTA files...
-First few files to be processed:
-ERS012303.fasta
-ERS012306.fasta
-ERS012307.fasta
-ERS012309.fasta
-ERS012312.fasta
-All files verified. Starting MASH sketching...
-/home/phemarajata/combined_poppunk_poppipe/work/05/85332a495429924cdfb77c938de330/.command.sh: line 17: mash: command not found

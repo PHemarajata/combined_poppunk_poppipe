@@ -47,20 +47,20 @@ process POPPUNK_MODEL {
     echo "Memory limits set: Virtual/Physical=${task.memory}"
     echo "Using ${task.cpus} threads."
 
-    # Create database with a fallback
-    if ! poppunk --create-db --r-files staged_files.list --output poppunk_db --threads ${task.cpus}; then
+    # Create database with a fallback - v2.7.5 syntax
+    if ! poppunk --create-db --r-files staged_files.list --output poppunk_db --threads ${task.cpus} --overwrite; then
         echo "⚠️  Database creation failed, retrying with 2 threads..."
-        poppunk --create-db --r-files staged_files.list --output poppunk_db --threads 2
+        poppunk --create-db --r-files staged_files.list --output poppunk_db --threads 2 --overwrite
     fi
     echo "✅ PopPUNK database created successfully."
 
-    # Fit model with fallbacks
+    # Fit model with fallbacks - v2.7.5 syntax
     echo "Fitting PopPUNK model..."
-    if poppunk --fit-model bgmm --ref-db poppunk_db --output poppunk_fit --threads ${task.cpus} ${params.poppunk_reciprocal ? '--reciprocal-only' : ''} ${params.poppunk_count_unique ? '--count-unique-distances' : ''} --max-search-depth ${params.poppunk_max_search} --K ${params.poppunk_K} --no-plot; then
+    if poppunk --fit-model bgmm --ref-db poppunk_db --output poppunk_fit --threads ${task.cpus} --overwrite ${params.poppunk_reciprocal ? '--reciprocal-only' : ''} ${params.poppunk_count_unique ? '--count-unique-distances' : ''} --max-search-depth ${params.poppunk_max_search} --K ${params.poppunk_K}; then
         echo "✅ PopPUNK model fitting completed successfully."
-    elif poppunk --fit-model bgmm --ref-db poppunk_db --output poppunk_fit --threads 2 --max-search-depth 10 --K 2 --no-plot; then
+    elif poppunk --fit-model bgmm --ref-db poppunk_db --output poppunk_fit --threads 2 --overwrite --max-search-depth 10 --K 2; then
         echo "✅ PopPUNK model fitting completed with reduced complexity."
-    elif poppunk --fit-model bgmm --ref-db poppunk_db --output poppunk_fit --threads 1 --K 2 --no-plot; then
+    elif poppunk --fit-model bgmm --ref-db poppunk_db --output poppunk_fit --threads 1 --overwrite --K 2; then
         echo "✅ PopPUNK model fitting completed with minimal settings."
     else
         echo "❌ All PopPUNK model fitting attempts failed."
@@ -70,7 +70,7 @@ process POPPUNK_MODEL {
     echo "Model fitting completed. Preparing database for assignment..."
 
     if [ -d "poppunk_fit" ]; then
-        # Copy and rename critical model files to what poppunk_assign expects
+        # Copy and rename critical model files to what poppunk --assign-query expects
         cp poppunk_fit/poppunk_fit_fit.pkl     poppunk_db/poppunk_db_fit.pkl
         cp poppunk_fit/poppunk_fit_fit.npz     poppunk_db/poppunk_db_fit.npz
         cp poppunk_fit/poppunk_fit_graph.gt    poppunk_db/poppunk_db_graph.gt

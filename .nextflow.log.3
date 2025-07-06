@@ -1,42 +1,42 @@
-Jul-06 12:15:23.323 [main] DEBUG nextflow.cli.Launcher - $> nextflow run main.nf --input /home/phemarajata/Downloads/bp_finalset/ --resultsDir /home/phemarajata/Downloads/bp_finalset/combined_results --threads 8 --ram '32 GB' -profile local
-Jul-06 12:15:23.425 [main] DEBUG nextflow.cli.CmdRun - N E X T F L O W  ~  version 25.04.4
-Jul-06 12:15:23.455 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/phemarajata/.nextflow/plugins; core-plugins: nf-amazon@2.15.0,nf-azure@1.16.0,nf-cloudcache@0.4.3,nf-codecommit@0.2.3,nf-console@1.2.1,nf-google@1.21.0,nf-k8s@1.0.0,nf-tower@1.11.3,nf-wave@1.12.1
-Jul-06 12:15:23.480 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
-Jul-06 12:15:23.481 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
-Jul-06 12:15:23.484 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.12.0 in 'deployment' mode
-Jul-06 12:15:23.506 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
-Jul-06 12:15:23.547 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /home/phemarajata/combined_poppunk_poppipe/nextflow.config
-Jul-06 12:15:23.550 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/phemarajata/combined_poppunk_poppipe/nextflow.config
-Jul-06 12:15:23.584 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /home/phemarajata/.nextflow/secrets/store.json
-Jul-06 12:15:23.589 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@2160e52a] - activable => nextflow.secret.LocalSecretsProvider@2160e52a
-Jul-06 12:15:23.605 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `local`
-Jul-06 12:15:25.431 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [standard, slurm, pbs, test_segfault, test, conda, singularity, aws, local, docker]
-Jul-06 12:15:25.527 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 from script declaration
-Jul-06 12:15:25.570 [main] DEBUG nextflow.cli.CmdRun - Launching `main.nf` [clever_goldwasser] DSL2 - revision: 978c755289
-Jul-06 12:15:25.576 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
-Jul-06 12:15:25.577 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
-Jul-06 12:15:25.665 [main] DEBUG nextflow.Session - Session UUID: aab757b3-1094-4263-988d-64e1136dc80a
-Jul-06 12:15:25.666 [main] DEBUG nextflow.Session - Run name: clever_goldwasser
-Jul-06 12:15:25.666 [main] DEBUG nextflow.Session - Executor pool size: 22
-Jul-06 12:15:25.681 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
-Jul-06 12:15:25.699 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=66; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
-Jul-06 12:15:25.738 [main] DEBUG nextflow.cli.CmdRun - 
+Jul-06 12:24:23.667 [main] DEBUG nextflow.cli.Launcher - $> nextflow run main.nf --input /home/phemarajata/Downloads/bp_finalset/ --resultsDir /home/phemarajata/Downloads/bp_finalset/combined_results --threads 8 --ram '32 GB' -profile local -resume
+Jul-06 12:24:23.722 [main] DEBUG nextflow.cli.CmdRun - N E X T F L O W  ~  version 25.04.4
+Jul-06 12:24:23.739 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/phemarajata/.nextflow/plugins; core-plugins: nf-amazon@2.15.0,nf-azure@1.16.0,nf-cloudcache@0.4.3,nf-codecommit@0.2.3,nf-console@1.2.1,nf-google@1.21.0,nf-k8s@1.0.0,nf-tower@1.11.3,nf-wave@1.12.1
+Jul-06 12:24:23.757 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Jul-06 12:24:23.758 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Jul-06 12:24:23.760 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.12.0 in 'deployment' mode
+Jul-06 12:24:23.767 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Jul-06 12:24:23.781 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /home/phemarajata/combined_poppunk_poppipe/nextflow.config
+Jul-06 12:24:23.783 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/phemarajata/combined_poppunk_poppipe/nextflow.config
+Jul-06 12:24:23.803 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /home/phemarajata/.nextflow/secrets/store.json
+Jul-06 12:24:23.805 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@2160e52a] - activable => nextflow.secret.LocalSecretsProvider@2160e52a
+Jul-06 12:24:23.814 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `local`
+Jul-06 12:24:24.814 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [standard, slurm, pbs, test_segfault, test, conda, singularity, aws, local, docker]
+Jul-06 12:24:24.914 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 from script declaration
+Jul-06 12:24:24.931 [main] DEBUG nextflow.cli.CmdRun - Launching `main.nf` [silly_brahmagupta] DSL2 - revision: 978c755289
+Jul-06 12:24:24.933 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Jul-06 12:24:24.933 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
+Jul-06 12:24:24.972 [main] DEBUG nextflow.Session - Session UUID: aab757b3-1094-4263-988d-64e1136dc80a
+Jul-06 12:24:24.972 [main] DEBUG nextflow.Session - Run name: silly_brahmagupta
+Jul-06 12:24:24.972 [main] DEBUG nextflow.Session - Executor pool size: 22
+Jul-06 12:24:24.983 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Jul-06 12:24:24.991 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=66; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
+Jul-06 12:24:25.013 [main] DEBUG nextflow.cli.CmdRun - 
   Version: 25.04.4 build 5950
   Created: 16-06-2025 14:23 UTC (21:23 ICST)
   System: Linux 6.11.0-29-generic
   Runtime: Groovy 4.0.26 on Java HotSpot(TM) 64-Bit Server VM 17.0.12+8-LTS-286
   Encoding: UTF-8 (UTF-8)
-  Process: 1031858@phemarajata-Stealth-16-MercedesAMG-A1VGG [127.0.1.1]
-  CPUs: 22 - Mem: 62.3 GB (9.4 GB) - Swap: 8 GB (7.2 GB)
-Jul-06 12:15:25.795 [main] DEBUG nextflow.Session - Work-dir: /home/phemarajata/combined_poppunk_poppipe/work [ext2/ext3]
-Jul-06 12:15:25.870 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
-Jul-06 12:15:25.888 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
-Jul-06 12:15:25.945 [main] DEBUG nextflow.Session - Observer factory (v2): LinObserverFactory
-Jul-06 12:15:26.007 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
-Jul-06 12:15:26.056 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 23; maxThreads: 1000
-Jul-06 12:15:26.163 [main] DEBUG nextflow.Session - Session start
-Jul-06 12:15:26.170 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow started -- trace file: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/trace_local.txt
-Jul-06 12:15:26.172 [main] DEBUG nextflow.Session - Trace file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/trace_local.txt -- enable the 'trace.overwrite' option in your config file to overwrite existing files
+  Process: 1061732@phemarajata-Stealth-16-MercedesAMG-A1VGG [127.0.1.1]
+  CPUs: 22 - Mem: 62.3 GB (10.1 GB) - Swap: 8 GB (7.2 GB)
+Jul-06 12:24:25.051 [main] DEBUG nextflow.Session - Work-dir: /home/phemarajata/combined_poppunk_poppipe/work [ext2/ext3]
+Jul-06 12:24:25.104 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Jul-06 12:24:25.117 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Jul-06 12:24:25.163 [main] DEBUG nextflow.Session - Observer factory (v2): LinObserverFactory
+Jul-06 12:24:25.266 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Jul-06 12:24:25.280 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 23; maxThreads: 1000
+Jul-06 12:24:25.438 [main] DEBUG nextflow.Session - Session start
+Jul-06 12:24:25.442 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow started -- trace file: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/trace_local.txt
+Jul-06 12:24:25.443 [main] DEBUG nextflow.Session - Trace file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/trace_local.txt -- enable the 'trace.overwrite' option in your config file to overwrite existing files
 nextflow.exception.AbortOperationException: Trace file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/trace_local.txt -- enable the 'trace.overwrite' option in your config file to overwrite existing files
 	at nextflow.trace.TraceHelper.newFileWriter(TraceHelper.groovy:67)
 	at nextflow.trace.TraceFileObserver.onFlowCreate(TraceFileObserver.groovy:206)
@@ -58,7 +58,7 @@ Caused by: java.nio.file.FileAlreadyExistsException: /home/phemarajata/Downloads
 	at java.base/java.nio.file.Files.newBufferedWriter(Files.java:3008)
 	at nextflow.trace.TraceHelper.newFileWriter(TraceHelper.groovy:64)
 	... 9 common frames omitted
-Jul-06 12:15:26.175 [main] DEBUG nextflow.Session - Report file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/execution_report_local.html -- enable the 'report.overwrite' option in your config file to overwrite existing files
+Jul-06 12:24:25.445 [main] DEBUG nextflow.Session - Report file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/execution_report_local.html -- enable the 'report.overwrite' option in your config file to overwrite existing files
 nextflow.exception.AbortOperationException: Report file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/execution_report_local.html -- enable the 'report.overwrite' option in your config file to overwrite existing files
 	at nextflow.trace.ReportObserver.onFlowCreate(ReportObserver.groovy:133)
 	at nextflow.Session$_notifyFlowCreate_lambda40.doCall(Session.groovy:1093)
@@ -69,7 +69,7 @@ nextflow.exception.AbortOperationException: Report file already exists: /home/ph
 	at nextflow.cli.CmdRun.run(CmdRun.groovy:379)
 	at nextflow.cli.Launcher.run(Launcher.groovy:513)
 	at nextflow.cli.Launcher.main(Launcher.groovy:673)
-Jul-06 12:15:26.175 [main] DEBUG nextflow.Session - Timeline file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/timeline_local.html -- enable the 'timeline.overwrite' option in your config file to overwrite existing files
+Jul-06 12:24:25.445 [main] DEBUG nextflow.Session - Timeline file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/timeline_local.html -- enable the 'timeline.overwrite' option in your config file to overwrite existing files
 nextflow.exception.AbortOperationException: Timeline file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/timeline_local.html -- enable the 'timeline.overwrite' option in your config file to overwrite existing files
 	at nextflow.trace.TimelineObserver.onFlowCreate(TimelineObserver.groovy:76)
 	at nextflow.Session$_notifyFlowCreate_lambda40.doCall(Session.groovy:1093)
@@ -80,7 +80,7 @@ nextflow.exception.AbortOperationException: Timeline file already exists: /home/
 	at nextflow.cli.CmdRun.run(CmdRun.groovy:379)
 	at nextflow.cli.Launcher.run(Launcher.groovy:513)
 	at nextflow.cli.Launcher.main(Launcher.groovy:673)
-Jul-06 12:15:26.177 [main] DEBUG nextflow.Session - DAG file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/pipeline_dag_local.html -- enable `dag.overwrite` in your config file to overwrite existing DAG files
+Jul-06 12:24:25.446 [main] DEBUG nextflow.Session - DAG file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/pipeline_dag_local.html -- enable `dag.overwrite` in your config file to overwrite existing DAG files
 nextflow.exception.AbortOperationException: DAG file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/pipeline_dag_local.html -- enable `dag.overwrite` in your config file to overwrite existing DAG files
 	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
 	at nextflow.trace.GraphObserver.onFlowCreate(GraphObserver.groovy:77)
@@ -92,117 +92,118 @@ nextflow.exception.AbortOperationException: DAG file already exists: /home/phema
 	at nextflow.cli.CmdRun.run(CmdRun.groovy:379)
 	at nextflow.cli.Launcher.run(Launcher.groovy:513)
 	at nextflow.cli.Launcher.main(Launcher.groovy:673)
-Jul-06 12:15:26.774 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
-Jul-06 12:15:26.782 [main] INFO  nextflow.script.BaseScript - ▶ FASTA input directory:  /home/phemarajata/Downloads/bp_finalset/
-Jul-06 12:15:26.786 [main] INFO  nextflow.script.BaseScript - ▶ Results directory:      /home/phemarajata/Downloads/bp_finalset/combined_results
-Jul-06 12:15:26.787 [main] INFO  nextflow.script.BaseScript - ▶ Threads / RAM:          8  /  32 GB
-Jul-06 12:15:28.050 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:VALIDATE_FASTA` matches process VALIDATE_FASTA
-Jul-06 12:15:28.052 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:VALIDATE_FASTA|SUMMARY_REPORT|SPLIT_STRAINS|CLUSTER_SUMMARY` matches process VALIDATE_FASTA
-Jul-06 12:15:28.060 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.061 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.066 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
-Jul-06 12:15:28.074 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=22; memory=62.3 GB; capacity=22; pollInterval=100ms; dumpInterval=5m
-Jul-06 12:15:28.077 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
-Jul-06 12:15:28.098 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'VALIDATE_FASTA': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.175 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MASH_SKETCH` matches process MASH_SKETCH
-Jul-06 12:15:28.175 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MASH_SKETCH|MASH_DIST` matches process MASH_SKETCH
-Jul-06 12:15:28.177 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.177 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.178 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'MASH_SKETCH': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.184 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MASH_DIST` matches process MASH_DIST
-Jul-06 12:15:28.185 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MASH_SKETCH|MASH_DIST` matches process MASH_DIST
-Jul-06 12:15:28.189 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.189 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.190 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'MASH_DIST': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.201 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BIN_SUBSAMPLE` matches process BIN_SUBSAMPLE
-Jul-06 12:15:28.204 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.205 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.209 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'BIN_SUBSAMPLE': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.225 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:POPPUNK_MODEL` matches process POPPUNK_MODEL
-Jul-06 12:15:28.226 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:POPPUNK_MODEL|POPPUNK_ASSIGN` matches process POPPUNK_MODEL
-Jul-06 12:15:28.229 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.229 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.233 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'POPPUNK_MODEL': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.251 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:POPPUNK_ASSIGN` matches process POPPUNK_ASSIGN
-Jul-06 12:15:28.256 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:POPPUNK_MODEL|POPPUNK_ASSIGN` matches process POPPUNK_ASSIGN
-Jul-06 12:15:28.263 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.264 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.267 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'POPPUNK_ASSIGN': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.275 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SUMMARY_REPORT` matches process SUMMARY_REPORT
-Jul-06 12:15:28.276 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:VALIDATE_FASTA|SUMMARY_REPORT|SPLIT_STRAINS|CLUSTER_SUMMARY` matches process SUMMARY_REPORT
-Jul-06 12:15:28.278 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.278 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.279 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'SUMMARY_REPORT': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.310 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SPLIT_STRAINS` matches process SPLIT_STRAINS
-Jul-06 12:15:28.310 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:VALIDATE_FASTA|SUMMARY_REPORT|SPLIT_STRAINS|CLUSTER_SUMMARY` matches process SPLIT_STRAINS
-Jul-06 12:15:28.312 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.312 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.314 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'SPLIT_STRAINS': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.343 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS` matches process SKETCHLIB_DISTS
-Jul-06 12:15:28.345 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process SKETCHLIB_DISTS
-Jul-06 12:15:28.360 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.361 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.363 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'SKETCHLIB_DISTS': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.393 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:GENERATE_NJ` matches process GENERATE_NJ
-Jul-06 12:15:28.400 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process GENERATE_NJ
-Jul-06 12:15:28.405 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.405 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.407 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'GENERATE_NJ': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.430 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKA_BUILD` matches process SKA_BUILD
-Jul-06 12:15:28.432 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process SKA_BUILD
-Jul-06 12:15:28.445 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.446 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.451 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'SKA_BUILD': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.488 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKA_ALIGN` matches process SKA_ALIGN
-Jul-06 12:15:28.490 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process SKA_ALIGN
-Jul-06 12:15:28.500 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.500 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.501 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'SKA_ALIGN': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.518 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKA_MAP` matches process SKA_MAP
-Jul-06 12:15:28.518 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process SKA_MAP
-Jul-06 12:15:28.520 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.521 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.521 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'SKA_MAP': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.528 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:IQ_TREE` matches process IQ_TREE
-Jul-06 12:15:28.529 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process IQ_TREE
-Jul-06 12:15:28.530 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.530 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.532 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'IQ_TREE': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.539 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:GUBBINS` matches process GUBBINS
-Jul-06 12:15:28.540 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process GUBBINS
-Jul-06 12:15:28.541 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.541 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.542 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'GUBBINS': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.549 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:FASTBAPS` matches process FASTBAPS
-Jul-06 12:15:28.550 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process FASTBAPS
-Jul-06 12:15:28.551 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.551 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.553 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'FASTBAPS': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.565 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:CLUSTER_SUMMARY` matches process CLUSTER_SUMMARY
-Jul-06 12:15:28.566 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:VALIDATE_FASTA|SUMMARY_REPORT|SPLIT_STRAINS|CLUSTER_SUMMARY` matches process CLUSTER_SUMMARY
-Jul-06 12:15:28.567 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
-Jul-06 12:15:28.567 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
-Jul-06 12:15:28.568 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'CLUSTER_SUMMARY': maxForks=0; fair=false; array=0
-Jul-06 12:15:28.575 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: CLUSTER_SUMMARY, MASH_DIST, MASH_SKETCH, SUMMARY_REPORT, SKA_MAP, GUBBINS, POPPUNK_MODEL, GENERATE_NJ, SPLIT_STRAINS, IQ_TREE, FASTBAPS, BIN_SUBSAMPLE, POPPUNK_ASSIGN, SKA_BUILD, SKETCHLIB_DISTS, VALIDATE_FASTA, SKA_ALIGN
-Jul-06 12:15:28.583 [main] DEBUG nextflow.Session - Igniting dataflow network (18)
-Jul-06 12:15:28.591 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > VALIDATE_FASTA
-Jul-06 12:15:28.592 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > MASH_SKETCH
-Jul-06 12:15:28.593 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > MASH_DIST
-Jul-06 12:15:28.593 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > BIN_SUBSAMPLE
-Jul-06 12:15:28.594 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > POPPUNK_MODEL
-Jul-06 12:15:28.594 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > POPPUNK_ASSIGN
-Jul-06 12:15:28.594 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > SUMMARY_REPORT
-Jul-06 12:15:28.594 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > SPLIT_STRAINS
-Jul-06 12:15:28.594 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > SKETCHLIB_DISTS
-Jul-06 12:15:28.594 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > GENERATE_NJ
-Jul-06 12:15:28.594 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > SKA_BUILD
-Jul-06 12:15:28.594 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > SKA_ALIGN
-Jul-06 12:15:28.594 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > SKA_MAP
-Jul-06 12:15:28.594 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > IQ_TREE
-Jul-06 12:15:28.595 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > GUBBINS
-Jul-06 12:15:28.596 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > FASTBAPS
-Jul-06 12:15:28.596 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CLUSTER_SUMMARY
-Jul-06 12:15:28.597 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
+Jul-06 12:24:25.778 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Jul-06 12:24:25.787 [main] INFO  nextflow.script.BaseScript - ▶ FASTA input directory:  /home/phemarajata/Downloads/bp_finalset/
+Jul-06 12:24:25.788 [main] INFO  nextflow.script.BaseScript - ▶ Results directory:      /home/phemarajata/Downloads/bp_finalset/combined_results
+Jul-06 12:24:25.789 [main] INFO  nextflow.script.BaseScript - ▶ Threads / RAM:          8  /  32 GB
+Jul-06 12:24:27.004 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:VALIDATE_FASTA` matches process VALIDATE_FASTA
+Jul-06 12:24:27.008 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:VALIDATE_FASTA|SUMMARY_REPORT|SPLIT_STRAINS|CLUSTER_SUMMARY` matches process VALIDATE_FASTA
+Jul-06 12:24:27.025 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.025 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.046 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Jul-06 12:24:27.063 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=22; memory=62.3 GB; capacity=22; pollInterval=100ms; dumpInterval=5m
+Jul-06 12:24:27.065 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Jul-06 12:24:27.088 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'VALIDATE_FASTA': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.178 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MASH_SKETCH` matches process MASH_SKETCH
+Jul-06 12:24:27.179 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MASH_SKETCH|MASH_DIST` matches process MASH_SKETCH
+Jul-06 12:24:27.181 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.181 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.182 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'MASH_SKETCH': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.188 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MASH_DIST` matches process MASH_DIST
+Jul-06 12:24:27.189 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:MASH_SKETCH|MASH_DIST` matches process MASH_DIST
+Jul-06 12:24:27.190 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.190 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.191 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'MASH_DIST': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.199 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:BIN_SUBSAMPLE` matches process BIN_SUBSAMPLE
+Jul-06 12:24:27.203 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.203 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.208 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'BIN_SUBSAMPLE': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.218 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:POPPUNK_MODEL` matches process POPPUNK_MODEL
+Jul-06 12:24:27.218 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:POPPUNK_MODEL|POPPUNK_ASSIGN` matches process POPPUNK_MODEL
+Jul-06 12:24:27.223 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.223 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.225 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'POPPUNK_MODEL': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.245 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:POPPUNK_ASSIGN` matches process POPPUNK_ASSIGN
+Jul-06 12:24:27.246 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:POPPUNK_MODEL|POPPUNK_ASSIGN` matches process POPPUNK_ASSIGN
+Jul-06 12:24:27.248 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.249 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.250 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'POPPUNK_ASSIGN': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.261 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SUMMARY_REPORT` matches process SUMMARY_REPORT
+Jul-06 12:24:27.265 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:VALIDATE_FASTA|SUMMARY_REPORT|SPLIT_STRAINS|CLUSTER_SUMMARY` matches process SUMMARY_REPORT
+Jul-06 12:24:27.273 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.274 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.277 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'SUMMARY_REPORT': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.323 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SPLIT_STRAINS` matches process SPLIT_STRAINS
+Jul-06 12:24:27.324 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:VALIDATE_FASTA|SUMMARY_REPORT|SPLIT_STRAINS|CLUSTER_SUMMARY` matches process SPLIT_STRAINS
+Jul-06 12:24:27.327 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.327 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.329 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'SPLIT_STRAINS': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.413 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS` matches process SKETCHLIB_DISTS
+Jul-06 12:24:27.420 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process SKETCHLIB_DISTS
+Jul-06 12:24:27.435 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.435 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.437 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'SKETCHLIB_DISTS': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.454 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:GENERATE_NJ` matches process GENERATE_NJ
+Jul-06 12:24:27.456 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process GENERATE_NJ
+Jul-06 12:24:27.459 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.459 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.460 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'GENERATE_NJ': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.481 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKA_BUILD` matches process SKA_BUILD
+Jul-06 12:24:27.485 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process SKA_BUILD
+Jul-06 12:24:27.487 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.488 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.494 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'SKA_BUILD': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.524 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKA_ALIGN` matches process SKA_ALIGN
+Jul-06 12:24:27.528 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process SKA_ALIGN
+Jul-06 12:24:27.532 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.532 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.534 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'SKA_ALIGN': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.561 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKA_MAP` matches process SKA_MAP
+Jul-06 12:24:27.562 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process SKA_MAP
+Jul-06 12:24:27.569 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.569 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.570 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'SKA_MAP': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.577 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:IQ_TREE` matches process IQ_TREE
+Jul-06 12:24:27.578 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process IQ_TREE
+Jul-06 12:24:27.579 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.579 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.580 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'IQ_TREE': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.592 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:GUBBINS` matches process GUBBINS
+Jul-06 12:24:27.593 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process GUBBINS
+Jul-06 12:24:27.594 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.595 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.595 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'GUBBINS': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.602 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:FASTBAPS` matches process FASTBAPS
+Jul-06 12:24:27.603 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:SKETCHLIB_DISTS|GENERATE_NJ|SKA_BUILD|SKA_ALIGN|SKA_MAP|IQ_TREE|GUBBINS|FASTBAPS` matches process FASTBAPS
+Jul-06 12:24:27.604 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.604 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.609 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'FASTBAPS': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.618 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:CLUSTER_SUMMARY` matches process CLUSTER_SUMMARY
+Jul-06 12:24:27.619 [main] DEBUG nextflow.script.ProcessConfig - Config settings `withName:VALIDATE_FASTA|SUMMARY_REPORT|SPLIT_STRAINS|CLUSTER_SUMMARY` matches process CLUSTER_SUMMARY
+Jul-06 12:24:27.621 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: local
+Jul-06 12:24:27.622 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jul-06 12:24:27.623 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'CLUSTER_SUMMARY': maxForks=0; fair=false; array=0
+Jul-06 12:24:27.629 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: CLUSTER_SUMMARY, MASH_DIST, MASH_SKETCH, SKA_MAP, SUMMARY_REPORT, GUBBINS, GENERATE_NJ, POPPUNK_MODEL, SPLIT_STRAINS, IQ_TREE, FASTBAPS, BIN_SUBSAMPLE, POPPUNK_ASSIGN, SKA_BUILD, SKETCHLIB_DISTS, VALIDATE_FASTA, SKA_ALIGN
+Jul-06 12:24:27.646 [main] DEBUG nextflow.Session - Igniting dataflow network (18)
+Jul-06 12:24:27.654 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > VALIDATE_FASTA
+Jul-06 12:24:27.655 [PathVisitor-1] DEBUG nextflow.file.PathVisitor - files for syntax: glob; folder: /home/phemarajata/Downloads/bp_finalset/; pattern: *.fasta; options: [checkIfExists:true]
+Jul-06 12:24:27.655 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > MASH_SKETCH
+Jul-06 12:24:27.655 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > MASH_DIST
+Jul-06 12:24:27.656 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > BIN_SUBSAMPLE
+Jul-06 12:24:27.656 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > POPPUNK_MODEL
+Jul-06 12:24:27.657 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > POPPUNK_ASSIGN
+Jul-06 12:24:27.657 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > SUMMARY_REPORT
+Jul-06 12:24:27.657 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > SPLIT_STRAINS
+Jul-06 12:24:27.658 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > SKETCHLIB_DISTS
+Jul-06 12:24:27.658 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > GENERATE_NJ
+Jul-06 12:24:27.658 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > SKA_BUILD
+Jul-06 12:24:27.661 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > SKA_ALIGN
+Jul-06 12:24:27.661 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > SKA_MAP
+Jul-06 12:24:27.661 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > IQ_TREE
+Jul-06 12:24:27.663 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > GUBBINS
+Jul-06 12:24:27.663 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > FASTBAPS
+Jul-06 12:24:27.663 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CLUSTER_SUMMARY
+Jul-06 12:24:27.664 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
   Script_677dd16b95346779: /home/phemarajata/combined_poppunk_poppipe/modules/local/sketchlib_dists.nf
   Script_7417cabf5d46dadf: /home/phemarajata/combined_poppunk_poppipe/modules/local/mash_dist.nf
   Script_5611570655ad6fc9: /home/phemarajata/combined_poppunk_poppipe/modules/local/bin_subsample.nf
@@ -211,28 +212,42 @@ Jul-06 12:15:28.597 [main] DEBUG nextflow.script.ScriptRunner - Parsed script fi
   Script_a1ab2c7ded95b477: /home/phemarajata/combined_poppunk_poppipe/modules/local/ska_align.nf
   Script_af0f02598d046699: /home/phemarajata/combined_poppunk_poppipe/modules/local/gubbins.nf
   Script_09945ad10bc74bcc: /home/phemarajata/combined_poppunk_poppipe/modules/local/generate_nj.nf
+  Script_4ba6f1d63591e50f: /home/phemarajata/combined_poppunk_poppipe/modules/local/poppunk_model.nf
   Script_00de19485908237f: /home/phemarajata/combined_poppunk_poppipe/modules/local/split_strains.nf
   Script_e47589c9cace8ded: /home/phemarajata/combined_poppunk_poppipe/main.nf
+  Script_01c5ac987d9dff76: /home/phemarajata/combined_poppunk_poppipe/modules/local/poppunk_assign.nf
   Script_300c7946cb49b7c2: /home/phemarajata/combined_poppunk_poppipe/modules/local/validate_fasta.nf
   Script_12bfbeedcd9a399d: /home/phemarajata/combined_poppunk_poppipe/modules/local/ska_map.nf
   Script_fb7ab28769143d20: /home/phemarajata/combined_poppunk_poppipe/modules/local/cluster_summary.nf
   Script_0479f6cbd4bfc016: /home/phemarajata/combined_poppunk_poppipe/modules/local/ska_build.nf
   Script_2a94688d5202e40d: /home/phemarajata/combined_poppunk_poppipe/modules/local/mash_sketch.nf
-  Script_304b8e50bb74db75: /home/phemarajata/combined_poppunk_poppipe/modules/local/poppunk_assign.nf
   Script_5d8500f795f4619c: /home/phemarajata/combined_poppunk_poppipe/modules/local/summary_report.nf
-  Script_aaf4f112d6c3a50c: /home/phemarajata/combined_poppunk_poppipe/modules/local/poppunk_model.nf
-Jul-06 12:15:28.598 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
-Jul-06 12:15:28.598 [main] DEBUG nextflow.Session - Session await
-Jul-06 12:15:28.599 [PathVisitor-1] DEBUG nextflow.file.PathVisitor - files for syntax: glob; folder: /home/phemarajata/Downloads/bp_finalset/; pattern: *.fasta; options: [checkIfExists:true]
-Jul-06 12:15:29.042 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Jul-06 12:15:29.048 [Task submitter] INFO  nextflow.Session - [a6/afd153] Submitted process > VALIDATE_FASTA (validate_fasta)
-Jul-06 12:15:39.626 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: VALIDATE_FASTA (validate_fasta); status: COMPLETED; exit: 0; error: -; workDir: /home/phemarajata/combined_poppunk_poppipe/work/a6/afd153b068063e5158a4d251d7d820]
-Jul-06 12:15:39.627 [Task monitor] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'TaskFinalizer' minSize=10; maxSize=66; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
-Jul-06 12:15:39.642 [Actor Thread 13] INFO  nextflow.script.BaseScript - 
+Jul-06 12:24:27.664 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Jul-06 12:24:27.665 [main] DEBUG nextflow.Session - Session await
+Jul-06 12:24:28.064 [Actor Thread 22] INFO  nextflow.processor.TaskProcessor - [a6/afd153] Cached process > VALIDATE_FASTA (validate_fasta)
+Jul-06 12:24:28.069 [Actor Thread 22] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+	at nextflow.trace.TraceFileObserver.onProcessCached(TraceFileObserver.groovy:281)
+	at nextflow.Session$_notifyTaskCached_lambda36.doCall(Session.groovy:1075)
+	at nextflow.Session.notifyEvent(Session.groovy:1138)
+	at nextflow.Session.notifyTaskCached(Session.groovy:1075)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.processor.TaskProcessor.checkCachedOutput(TaskProcessor.groovy:982)
+	at nextflow.processor.TaskProcessor.checkCachedOrLaunchTask(TaskProcessor.groovy:815)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.processor.TaskProcessor.invokeTask(TaskProcessor.groovy:657)
+	at nextflow.processor.InvokeTaskAdapter.call(InvokeTaskAdapter.groovy:52)
+	at groovyx.gpars.dataflow.operator.DataflowOperatorActor.startTask(DataflowOperatorActor.java:120)
+	at groovyx.gpars.dataflow.operator.ForkingDataflowOperatorActor.access$001(ForkingDataflowOperatorActor.java:35)
+	at groovyx.gpars.dataflow.operator.ForkingDataflowOperatorActor$1.run(ForkingDataflowOperatorActor.java:58)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+Jul-06 12:24:28.089 [Actor Thread 18] INFO  nextflow.script.BaseScript - 
 ==================================================
-Jul-06 12:15:39.644 [Actor Thread 13] INFO  nextflow.script.BaseScript - 📋 FASTA VALIDATION REPORT
-Jul-06 12:15:39.645 [Actor Thread 13] INFO  nextflow.script.BaseScript - ==================================================
-Jul-06 12:15:39.647 [Actor Thread 13] INFO  nextflow.script.BaseScript - FASTA Validation Report
+Jul-06 12:24:28.091 [Actor Thread 18] INFO  nextflow.script.BaseScript - 📋 FASTA VALIDATION REPORT
+Jul-06 12:24:28.091 [Actor Thread 18] INFO  nextflow.script.BaseScript - ==================================================
+Jul-06 12:24:28.107 [Actor Thread 18] INFO  nextflow.script.BaseScript - FASTA Validation Report
 ======================
 Total files processed: 322
 Valid files: 322
@@ -563,10 +578,94 @@ Valid files (with absolute paths):
   ✓ /home/phemarajata/Downloads/bp_finalset/IP-0130.fasta
 
 
-Jul-06 12:15:39.648 [Actor Thread 13] INFO  nextflow.script.BaseScript - ==================================================
+Jul-06 12:24:28.114 [Actor Thread 22] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'PublishDir' minSize=10; maxSize=66; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
+Jul-06 12:24:28.114 [Actor Thread 18] INFO  nextflow.script.BaseScript - ==================================================
 
-Jul-06 12:15:39.650 [TaskFinalizer-1] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'PublishDir' minSize=10; maxSize=66; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
-Jul-06 12:15:39.660 [TaskFinalizer-1] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+Jul-06 12:24:28.312 [Actor Thread 19] INFO  nextflow.processor.TaskProcessor - [71/6cdba8] Cached process > MASH_SKETCH (mash_sketch)
+Jul-06 12:24:28.313 [Actor Thread 19] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+	at nextflow.trace.TraceFileObserver.onProcessCached(TraceFileObserver.groovy:281)
+	at nextflow.Session$_notifyTaskCached_lambda36.doCall(Session.groovy:1075)
+	at nextflow.Session.notifyEvent(Session.groovy:1138)
+	at nextflow.Session.notifyTaskCached(Session.groovy:1075)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.processor.TaskProcessor.checkCachedOutput(TaskProcessor.groovy:982)
+	at nextflow.processor.TaskProcessor.checkCachedOrLaunchTask(TaskProcessor.groovy:815)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.processor.TaskProcessor.invokeTask(TaskProcessor.groovy:657)
+	at nextflow.processor.InvokeTaskAdapter.call(InvokeTaskAdapter.groovy:52)
+	at groovyx.gpars.dataflow.operator.DataflowOperatorActor.startTask(DataflowOperatorActor.java:120)
+	at groovyx.gpars.dataflow.operator.ForkingDataflowOperatorActor.access$001(ForkingDataflowOperatorActor.java:35)
+	at groovyx.gpars.dataflow.operator.ForkingDataflowOperatorActor$1.run(ForkingDataflowOperatorActor.java:58)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+Jul-06 12:24:28.342 [Actor Thread 17] INFO  nextflow.processor.TaskProcessor - [10/b98b3d] Cached process > MASH_DIST (mash_dist)
+Jul-06 12:24:28.343 [Actor Thread 17] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+	at nextflow.trace.TraceFileObserver.onProcessCached(TraceFileObserver.groovy:281)
+	at nextflow.Session$_notifyTaskCached_lambda36.doCall(Session.groovy:1075)
+	at nextflow.Session.notifyEvent(Session.groovy:1138)
+	at nextflow.Session.notifyTaskCached(Session.groovy:1075)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.processor.TaskProcessor.checkCachedOutput(TaskProcessor.groovy:982)
+	at nextflow.processor.TaskProcessor.checkCachedOrLaunchTask(TaskProcessor.groovy:815)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.processor.TaskProcessor.invokeTask(TaskProcessor.groovy:657)
+	at nextflow.processor.InvokeTaskAdapter.call(InvokeTaskAdapter.groovy:52)
+	at groovyx.gpars.dataflow.operator.DataflowOperatorActor.startTask(DataflowOperatorActor.java:120)
+	at groovyx.gpars.dataflow.operator.ForkingDataflowOperatorActor.access$001(ForkingDataflowOperatorActor.java:35)
+	at groovyx.gpars.dataflow.operator.ForkingDataflowOperatorActor$1.run(ForkingDataflowOperatorActor.java:58)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+Jul-06 12:24:28.371 [Actor Thread 18] INFO  nextflow.processor.TaskProcessor - [db/dd8ff4] Cached process > BIN_SUBSAMPLE (bin_subsample)
+Jul-06 12:24:28.372 [Actor Thread 18] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+	at nextflow.trace.TraceFileObserver.onProcessCached(TraceFileObserver.groovy:281)
+	at nextflow.Session$_notifyTaskCached_lambda36.doCall(Session.groovy:1075)
+	at nextflow.Session.notifyEvent(Session.groovy:1138)
+	at nextflow.Session.notifyTaskCached(Session.groovy:1075)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.processor.TaskProcessor.checkCachedOutput(TaskProcessor.groovy:982)
+	at nextflow.processor.TaskProcessor.checkCachedOrLaunchTask(TaskProcessor.groovy:815)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.processor.TaskProcessor.invokeTask(TaskProcessor.groovy:657)
+	at nextflow.processor.InvokeTaskAdapter.call(InvokeTaskAdapter.groovy:52)
+	at groovyx.gpars.dataflow.operator.DataflowOperatorActor.startTask(DataflowOperatorActor.java:120)
+	at groovyx.gpars.dataflow.operator.ForkingDataflowOperatorActor.access$001(ForkingDataflowOperatorActor.java:35)
+	at groovyx.gpars.dataflow.operator.ForkingDataflowOperatorActor$1.run(ForkingDataflowOperatorActor.java:58)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+Jul-06 12:24:28.484 [Actor Thread 20] INFO  nextflow.processor.TaskProcessor - [27/76a1a4] Cached process > POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))
+Jul-06 12:24:28.485 [Actor Thread 20] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+	at nextflow.trace.TraceFileObserver.onProcessCached(TraceFileObserver.groovy:281)
+	at nextflow.Session$_notifyTaskCached_lambda36.doCall(Session.groovy:1075)
+	at nextflow.Session.notifyEvent(Session.groovy:1138)
+	at nextflow.Session.notifyTaskCached(Session.groovy:1075)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.processor.TaskProcessor.checkCachedOutput(TaskProcessor.groovy:982)
+	at nextflow.processor.TaskProcessor.checkCachedOrLaunchTask(TaskProcessor.groovy:815)
+	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:321)
+	at nextflow.processor.TaskProcessor.invokeTask(TaskProcessor.groovy:657)
+	at nextflow.processor.InvokeTaskAdapter.call(InvokeTaskAdapter.groovy:52)
+	at groovyx.gpars.dataflow.operator.DataflowOperatorActor.startTask(DataflowOperatorActor.java:120)
+	at groovyx.gpars.dataflow.operator.ForkingDataflowOperatorActor.access$001(ForkingDataflowOperatorActor.java:35)
+	at groovyx.gpars.dataflow.operator.ForkingDataflowOperatorActor$1.run(ForkingDataflowOperatorActor.java:58)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+Jul-06 12:24:28.756 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jul-06 12:24:28.764 [Task submitter] INFO  nextflow.Session - [22/737566] Submitted process > POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)
+Jul-06 12:24:34.805 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 6; name: POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples); status: COMPLETED; exit: 1; error: -; workDir: /home/phemarajata/combined_poppunk_poppipe/work/22/73756698f3ae3d08d48e30ba5d34c1]
+Jul-06 12:24:34.806 [Task monitor] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'TaskFinalizer' minSize=10; maxSize=66; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
+Jul-06 12:24:34.814 [TaskFinalizer-1] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
+  task: name=POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples); work-dir=/home/phemarajata/combined_poppunk_poppipe/work/22/73756698f3ae3d08d48e30ba5d34c1
+  error [nextflow.exception.ProcessFailedException]: Process `POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)` terminated with an error exit status (1)
+Jul-06 12:24:34.823 [TaskFinalizer-1] INFO  nextflow.processor.TaskProcessor - [22/737566] NOTE: Process `POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)` terminated with an error exit status (1) -- Execution is retried (1)
+Jul-06 12:24:34.827 [TaskFinalizer-1] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
 java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
 	at nextflow.trace.TraceFileObserver.onProcessComplete(TraceFileObserver.groovy:270)
 	at nextflow.Session$_notifyTaskComplete_lambda34.doCall(Session.groovy:1063)
@@ -592,10 +691,14 @@ java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Ob
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:842)
-Jul-06 12:15:39.721 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Jul-06 12:15:39.722 [Task submitter] INFO  nextflow.Session - [71/6cdba8] Submitted process > MASH_SKETCH (mash_sketch)
-Jul-06 12:15:49.557 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 2; name: MASH_SKETCH (mash_sketch); status: COMPLETED; exit: 0; error: -; workDir: /home/phemarajata/combined_poppunk_poppipe/work/71/6cdba8b897d5146ae6d2497bc91896]
-Jul-06 12:15:49.562 [TaskFinalizer-2] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+Jul-06 12:24:34.873 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jul-06 12:24:34.874 [Task submitter] INFO  nextflow.Session - [6e/65c161] Re-submitted process > POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)
+Jul-06 12:24:39.430 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 7; name: POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples); status: COMPLETED; exit: 1; error: -; workDir: /home/phemarajata/combined_poppunk_poppipe/work/6e/65c161d4fac831dcaf44071b514e78]
+Jul-06 12:24:39.433 [TaskFinalizer-2] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
+  task: name=POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples); work-dir=/home/phemarajata/combined_poppunk_poppipe/work/6e/65c161d4fac831dcaf44071b514e78
+  error [nextflow.exception.ProcessFailedException]: Process `POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)` terminated with an error exit status (1)
+Jul-06 12:24:39.434 [TaskFinalizer-2] INFO  nextflow.processor.TaskProcessor - [6e/65c161] NOTE: Process `POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)` terminated with an error exit status (1) -- Execution is retried (2)
+Jul-06 12:24:39.435 [TaskFinalizer-2] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
 java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
 	at nextflow.trace.TraceFileObserver.onProcessComplete(TraceFileObserver.groovy:270)
 	at nextflow.Session$_notifyTaskComplete_lambda34.doCall(Session.groovy:1063)
@@ -621,10 +724,14 @@ java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Ob
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:842)
-Jul-06 12:15:49.576 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Jul-06 12:15:49.577 [Task submitter] INFO  nextflow.Session - [10/b98b3d] Submitted process > MASH_DIST (mash_dist)
-Jul-06 12:15:50.298 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 3; name: MASH_DIST (mash_dist); status: COMPLETED; exit: 0; error: -; workDir: /home/phemarajata/combined_poppunk_poppipe/work/10/b98b3d7061a2f802abb9fb5a5332f2]
-Jul-06 12:15:50.302 [TaskFinalizer-3] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+Jul-06 12:24:39.452 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jul-06 12:24:39.452 [Task submitter] INFO  nextflow.Session - [dd/626c8a] Re-submitted process > POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)
+Jul-06 12:24:46.346 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 8; name: POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples); status: COMPLETED; exit: 1; error: -; workDir: /home/phemarajata/combined_poppunk_poppipe/work/dd/626c8aa838b467bcd5428d3f79c9dd]
+Jul-06 12:24:46.348 [TaskFinalizer-3] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
+  task: name=POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples); work-dir=/home/phemarajata/combined_poppunk_poppipe/work/dd/626c8aa838b467bcd5428d3f79c9dd
+  error [nextflow.exception.ProcessFailedException]: Process `POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)` terminated with an error exit status (1)
+Jul-06 12:24:46.348 [TaskFinalizer-3] INFO  nextflow.processor.TaskProcessor - [dd/626c8a] NOTE: Process `POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)` terminated with an error exit status (1) -- Execution is retried (3)
+Jul-06 12:24:46.349 [TaskFinalizer-3] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
 java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
 	at nextflow.trace.TraceFileObserver.onProcessComplete(TraceFileObserver.groovy:270)
 	at nextflow.Session$_notifyTaskComplete_lambda34.doCall(Session.groovy:1063)
@@ -650,342 +757,198 @@ java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Ob
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:842)
-Jul-06 12:15:50.330 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Jul-06 12:15:50.331 [Task submitter] INFO  nextflow.Session - [db/dd8ff4] Submitted process > BIN_SUBSAMPLE (bin_subsample)
-Jul-06 12:15:52.766 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 4; name: BIN_SUBSAMPLE (bin_subsample); status: COMPLETED; exit: 0; error: -; workDir: /home/phemarajata/combined_poppunk_poppipe/work/db/dd8ff482af3d9b6f60ab8e45c1c87f]
-Jul-06 12:15:52.770 [TaskFinalizer-4] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
-java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
-	at nextflow.trace.TraceFileObserver.onProcessComplete(TraceFileObserver.groovy:270)
-	at nextflow.Session$_notifyTaskComplete_lambda34.doCall(Session.groovy:1063)
-	at nextflow.Session.notifyEvent(Session.groovy:1138)
-	at nextflow.Session.notifyTaskComplete(Session.groovy:1063)
-	at nextflow.processor.TaskPollingMonitor.finalizeTask(TaskPollingMonitor.groovy:699)
-	at nextflow.processor.TaskPollingMonitor.safeFinalizeTask(TaskPollingMonitor.groovy:686)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
-	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
-	at groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
-	at org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:645)
-	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:628)
-	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethodSafe(InvokerHelper.java:82)
-	at nextflow.processor.TaskPollingMonitor$_checkTaskStatus_lambda8.doCall(TaskPollingMonitor.groovy:676)
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
-	at java.base/java.lang.Thread.run(Thread.java:842)
-Jul-06 12:15:52.830 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Jul-06 12:15:52.831 [Task submitter] INFO  nextflow.Session - [db/2b0654] Submitted process > POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))
-Jul-06 12:16:17.496 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 5; name: POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list)); status: COMPLETED; exit: 1; error: -; workDir: /home/phemarajata/combined_poppunk_poppipe/work/db/2b0654871ebc6fb34a0b821d46b353]
-Jul-06 12:16:17.501 [TaskFinalizer-5] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
-  task: name=POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list)); work-dir=/home/phemarajata/combined_poppunk_poppipe/work/db/2b0654871ebc6fb34a0b821d46b353
-  error [nextflow.exception.ProcessFailedException]: Process `POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))` terminated with an error exit status (1)
-Jul-06 12:16:17.508 [TaskFinalizer-5] INFO  nextflow.processor.TaskProcessor - [db/2b0654] NOTE: Process `POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))` terminated with an error exit status (1) -- Execution is retried (1)
-Jul-06 12:16:17.509 [TaskFinalizer-5] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
-java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
-	at nextflow.trace.TraceFileObserver.onProcessComplete(TraceFileObserver.groovy:270)
-	at nextflow.Session$_notifyTaskComplete_lambda34.doCall(Session.groovy:1063)
-	at nextflow.Session.notifyEvent(Session.groovy:1138)
-	at nextflow.Session.notifyTaskComplete(Session.groovy:1063)
-	at nextflow.processor.TaskPollingMonitor.finalizeTask(TaskPollingMonitor.groovy:699)
-	at nextflow.processor.TaskPollingMonitor.safeFinalizeTask(TaskPollingMonitor.groovy:686)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
-	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
-	at groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
-	at org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:645)
-	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:628)
-	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethodSafe(InvokerHelper.java:82)
-	at nextflow.processor.TaskPollingMonitor$_checkTaskStatus_lambda8.doCall(TaskPollingMonitor.groovy:676)
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
-	at java.base/java.lang.Thread.run(Thread.java:842)
-Jul-06 12:16:17.530 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Jul-06 12:16:17.531 [Task submitter] INFO  nextflow.Session - [15/b80d86] Re-submitted process > POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))
-Jul-06 12:16:34.811 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 6; name: POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list)); status: COMPLETED; exit: 1; error: -; workDir: /home/phemarajata/combined_poppunk_poppipe/work/15/b80d864d3cf2a64d3b5f8ad76e37dd]
-Jul-06 12:16:34.813 [TaskFinalizer-6] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
-  task: name=POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list)); work-dir=/home/phemarajata/combined_poppunk_poppipe/work/15/b80d864d3cf2a64d3b5f8ad76e37dd
-  error [nextflow.exception.ProcessFailedException]: Process `POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))` terminated with an error exit status (1)
-Jul-06 12:16:34.814 [TaskFinalizer-6] INFO  nextflow.processor.TaskProcessor - [15/b80d86] NOTE: Process `POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))` terminated with an error exit status (1) -- Execution is retried (2)
-Jul-06 12:16:34.815 [TaskFinalizer-6] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
-java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
-	at nextflow.trace.TraceFileObserver.onProcessComplete(TraceFileObserver.groovy:270)
-	at nextflow.Session$_notifyTaskComplete_lambda34.doCall(Session.groovy:1063)
-	at nextflow.Session.notifyEvent(Session.groovy:1138)
-	at nextflow.Session.notifyTaskComplete(Session.groovy:1063)
-	at nextflow.processor.TaskPollingMonitor.finalizeTask(TaskPollingMonitor.groovy:699)
-	at nextflow.processor.TaskPollingMonitor.safeFinalizeTask(TaskPollingMonitor.groovy:686)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
-	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
-	at groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
-	at org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:645)
-	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:628)
-	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethodSafe(InvokerHelper.java:82)
-	at nextflow.processor.TaskPollingMonitor$_checkTaskStatus_lambda8.doCall(TaskPollingMonitor.groovy:676)
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
-	at java.base/java.lang.Thread.run(Thread.java:842)
-Jul-06 12:16:34.829 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Jul-06 12:16:34.830 [Task submitter] INFO  nextflow.Session - [64/42293c] Re-submitted process > POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))
-Jul-06 12:16:54.790 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 7; name: POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list)); status: COMPLETED; exit: 1; error: -; workDir: /home/phemarajata/combined_poppunk_poppipe/work/64/42293c5457075a56bddcb7598817ae]
-Jul-06 12:16:54.793 [TaskFinalizer-7] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
-  task: name=POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list)); work-dir=/home/phemarajata/combined_poppunk_poppipe/work/64/42293c5457075a56bddcb7598817ae
-  error [nextflow.exception.ProcessFailedException]: Process `POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))` terminated with an error exit status (1)
-Jul-06 12:16:54.795 [TaskFinalizer-7] INFO  nextflow.processor.TaskProcessor - [64/42293c] NOTE: Process `POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))` terminated with an error exit status (1) -- Execution is retried (3)
-Jul-06 12:16:54.797 [TaskFinalizer-7] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
-java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
-	at nextflow.trace.TraceFileObserver.onProcessComplete(TraceFileObserver.groovy:270)
-	at nextflow.Session$_notifyTaskComplete_lambda34.doCall(Session.groovy:1063)
-	at nextflow.Session.notifyEvent(Session.groovy:1138)
-	at nextflow.Session.notifyTaskComplete(Session.groovy:1063)
-	at nextflow.processor.TaskPollingMonitor.finalizeTask(TaskPollingMonitor.groovy:699)
-	at nextflow.processor.TaskPollingMonitor.safeFinalizeTask(TaskPollingMonitor.groovy:686)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:343)
-	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:328)
-	at groovy.lang.MetaClassImpl.doInvokeMethod(MetaClassImpl.java:1333)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1088)
-	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1007)
-	at org.codehaus.groovy.runtime.InvokerHelper.invokePogoMethod(InvokerHelper.java:645)
-	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethod(InvokerHelper.java:628)
-	at org.codehaus.groovy.runtime.InvokerHelper.invokeMethodSafe(InvokerHelper.java:82)
-	at nextflow.processor.TaskPollingMonitor$_checkTaskStatus_lambda8.doCall(TaskPollingMonitor.groovy:676)
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
-	at java.base/java.lang.Thread.run(Thread.java:842)
-Jul-06 12:16:54.821 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
-Jul-06 12:16:54.822 [Task submitter] INFO  nextflow.Session - [8f/e8d31e] Re-submitted process > POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))
-Jul-06 12:17:25.062 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 8; name: POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list)); status: COMPLETED; exit: 1; error: -; workDir: /home/phemarajata/combined_poppunk_poppipe/work/8f/e8d31e886a398c177c7ed7edc99f1a]
-Jul-06 12:17:25.065 [TaskFinalizer-8] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
-  task: name=POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list)); work-dir=/home/phemarajata/combined_poppunk_poppipe/work/8f/e8d31e886a398c177c7ed7edc99f1a
-  error [nextflow.exception.ProcessFailedException]: Process `POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))` terminated with an error exit status (1)
-Jul-06 12:17:25.081 [TaskFinalizer-8] ERROR nextflow.processor.TaskProcessor - Error executing process > 'POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))'
+Jul-06 12:24:46.368 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jul-06 12:24:46.368 [Task submitter] INFO  nextflow.Session - [88/c7bba8] Re-submitted process > POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)
+Jul-06 12:24:52.973 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 9; name: POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples); status: COMPLETED; exit: 1; error: -; workDir: /home/phemarajata/combined_poppunk_poppipe/work/88/c7bba87bcde5e9640674e959fcc981]
+Jul-06 12:24:52.975 [TaskFinalizer-4] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
+  task: name=POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples); work-dir=/home/phemarajata/combined_poppunk_poppipe/work/88/c7bba87bcde5e9640674e959fcc981
+  error [nextflow.exception.ProcessFailedException]: Process `POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)` terminated with an error exit status (1)
+Jul-06 12:24:52.995 [TaskFinalizer-4] ERROR nextflow.processor.TaskProcessor - Error executing process > 'POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)'
 
 Caused by:
-  Process `POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))` terminated with an error exit status (1)
+  Process `POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)` terminated with an error exit status (1)
 
 
 Command executed:
 
-  # Check if subset list is not empty
-  if [ ! -s "subset.list" ]; then
-      echo "ERROR: Subset list is empty. No valid genomes found for PopPUNK modeling."
-      exit 1
-  fi
-  
-  echo "Building PopPUNK database with $(wc -l < "subset.list") genomes..."
-  
-  # Create a new file list with staged filenames by mapping sample names to the staged FASTA files
-  > staged_files.list
+  # Create a staged file list for all valid FASTA files.
+  # This assumes valid_list is a two-column TSV: sample_name	path/to/file.fasta
+  > staged_all_files.list
   while IFS=$'\t' read -r sample_name file_path; do
       basename_file=$(basename "$file_path")
       if [ -f "$basename_file" ]; then
-          echo -e "$sample_name\t$basename_file" >> staged_files.list
+          echo -e "$sample_name\t$basename_file" >> staged_all_files.list
       else
-          echo "ERROR: Staged file not found: $basename_file for sample $sample_name"
-          exit 1
+          echo "WARNING: Staged file not found for sample '$sample_name': $basename_file"
       fi
-  done < "subset.list"
+  done < "valid_files.list"
   
-  echo "Created staged files list. Verifying all files are present..."
-  cat staged_files.list
+  echo "Assigning $(wc -l < staged_all_files.list) genomes to PopPUNK clusters..."
   
-  # SEGFAULT PREVENTION: Set memory and resource limits
-  echo "Setting resource limits to prevent segmentation faults..."
-  ulimit -v 41943040  # Virtual memory limit in KB
-  ulimit -m 41943040  # Physical memory limit in KB
+  # SEGFAULT PREVENTION: Set resource limits
+  echo "Setting resource limits..."
+  ulimit -v 50331648  # Virtual memory limit in KB
+  ulimit -m 50331648  # Physical memory limit in KB
   ulimit -s 8192       # 8MB stack limit
   ulimit -c 0          # Disable core dumps
+  echo "Memory limits set: Virtual/Physical=48 GB"
+  echo "Using 8 threads."
   
-  echo "Memory limits set: Virtual/Physical=40 GB"
-  echo "Using 12 threads for PopPUNK."
-  
-  # Create database with a fallback for reduced threads
-  if ! poppunk --create-db --r-files staged_files.list \
-      --output poppunk_db --threads 12; then
-      echo "⚠️  Database creation failed, retrying with 2 threads..."
-      poppunk --create-db --r-files staged_files.list \
-          --output poppunk_db --threads 2
-  fi
-  echo "✅ PopPUNK database created successfully."
-  
-  # Fit model with optimized features and multiple fallbacks
-  echo "Fitting PopPUNK model with optimized parameters..."
-  if poppunk --fit-model bgmm --ref-db poppunk_db --output poppunk_fit --threads 12 --reciprocal-only  --max-search-depth 15 --K 2 --no-plot; then
-      echo "✅ PopPUNK model fitting completed successfully."
-  elif poppunk --fit-model bgmm --ref-db poppunk_db --output poppunk_fit --threads 2 --max-search-depth 10 --K 2 --no-plot; then
-      echo "✅ PopPUNK model fitting completed with reduced complexity."
-  elif poppunk --fit-model bgmm --ref-db poppunk_db --output poppunk_fit --threads 1 --K 2 --no-plot; then
-      echo "✅ PopPUNK model fitting completed with minimal settings."
+  # Run PopPUNK assignment with fallbacks. The --no-plot flag has been removed as it is invalid.
+  if poppunk_assign --db "poppunk_db" --query staged_all_files.list --output poppunk_full --threads 8 ; then
+      echo "✅ PopPUNK assignment completed successfully."
+  elif poppunk_assign --db "poppunk_db" --query staged_all_files.list --output poppunk_full --threads 2 ; then
+      echo "✅ PopPUNK assignment completed with reduced threads."
+  elif poppunk_assign --db "poppunk_db" --query staged_all_files.list --output poppunk_full --threads 1 ; then
+      echo "✅ PopPUNK assignment completed with minimal settings."
   else
-      echo "❌ All PopPUNK model fitting attempts failed."
+      echo "❌ All PopPUNK assignment attempts failed."
       exit 1
   fi
   
-  echo "Model fitting completed. Preparing database for assignment..."
-  # Consolidate the fitted model into the database directory for poppunk_assign
-  if [ -d "poppunk_fit" ]; then
-      # Copy and rename critical model files to what poppunk_assign expects
-      cp poppunk_fit/poppunk_fit_fit.pkl     poppunk_db/poppunk_db_fit.pkl
-      cp poppunk_fit/poppunk_fit_fit.npz     poppunk_db/poppunk_db_fit.npz
-      cp poppunk_fit/poppunk_fit_graph.gt    poppunk_db/poppunk_db_graph.gt
-      cp poppunk_fit/*_clusters.csv         poppunk_db/poppunk_db_clusters.csv
-  
-      # Verify that the final cluster file exists before copying to output
-      if [ -f "poppunk_db/poppunk_db_clusters.csv" ]; then
-          cp poppunk_db/poppunk_db_clusters.csv cluster_model.csv
-          echo "✓ Cluster model CSV prepared."
-      else
-           echo "sample,cluster" > cluster_model.csv
-           echo "⚠️  PopPUNK completed but cluster assignments file was not found."
-      fi
+  # Locate the definitive output cluster file and copy it
+  ASSIGN_CSV="poppunk_full/poppunk_full_clusters.csv"
+  if [ -f "$ASSIGN_CSV" ]; then
+      cp "$ASSIGN_CSV" full_assign.csv
+      echo "Final assignment file 'full_assign.csv' created."
   else
-      echo "ERROR: poppunk_fit directory not found after model fitting."
+      echo "ERROR: PopPUNK assignment finished, but the output file ($ASSIGN_CSV) was not found."
+      # Create a minimal file to prevent the pipeline from crashing, but log the error
+      echo "sample,cluster" > full_assign.csv
+      echo "no_sample,assignment_failed" >> full_assign.csv
       exit 1
   fi
   
-  echo "PopPUNK model process completed successfully!"
+  # Cluster distribution analysis
+  echo "--- Cluster Distribution Analysis ---"
+  total_samples=$(tail -n +2 full_assign.csv | wc -l)
+  unique_clusters=$(tail -n +2 full_assign.csv | cut -d',' -f2 | sort -u | wc -l)
+  echo "Total samples assigned: $total_samples"
+  echo "Number of unique clusters: $unique_clusters"
+  echo "Top 10 largest clusters:"
+  tail -n +2 full_assign.csv | cut -d',' -f2 | sort | uniq -c | sort -nr | head -10
+  
+  if [ "$unique_clusters" -eq 1 ] && [ "$total_samples" -gt 1 ]; then
+      echo "⚠️  WARNING: All samples were assigned to a single cluster."
+  else
+      echo "✅ Cluster diversity looks good."
+  fi
 
 Command exit status:
   1
 
 Command output:
-  IP-0085	IP-0085.fasta
-  IP-0089	IP-0089.fasta
-  IP-0141	IP-0141.fasta
-  IP-0090	IP-0090.fasta
-  IP-0122	IP-0122.fasta
-  IP-0094	IP-0094.fasta
-  IP-0097	IP-0097.fasta
-  IP-0098	IP-0098.fasta
-  IP-0099	IP-0099.fasta
-  IP-0174	IP-0174.fasta
-  IP-0100	IP-0100.fasta
-  IP-0149	IP-0149.fasta
-  IP-0102	IP-0102.fasta
-  IP-0106	IP-0106.fasta
-  IP-0107	IP-0107.fasta
-  IP-0110	IP-0110.fasta
-  IP-0116	IP-0116.fasta
-  IP-0120	IP-0120.fasta
-  IP-0121	IP-0121.fasta
-  IP-0123	IP-0123.fasta
-  IP-0128	IP-0128.fasta
-  IP-0159	IP-0159.fasta
-  IP-0133	IP-0133.fasta
-  IP-0139	IP-0139.fasta
-  IP-0165	IP-0165.fasta
-  IP-0142	IP-0142.fasta
-  IP-0144	IP-0144.fasta
-  IP-0152	IP-0152.fasta
-  IP-0151	IP-0151.fasta
-  IP-0157	IP-0157.fasta
-  IP-0158	IP-0158.fasta
-  IP-0164	IP-0164.fasta
-  IP-0166	IP-0166.fasta
-  IP-0172	IP-0172.fasta
-  IP-0176	IP-0176.fasta
-  IP-0177	IP-0177.fasta
-  IP-0178	IP-0178.fasta
-  IP-0183	IP-0183.fasta
-  IP-0184	IP-0184.fasta
-  IP-0189	IP-0189.fasta
-  IP-0190	IP-0190.fasta
-  IP-0194	IP-0194.fasta
-  IP-0200	IP-0200.fasta
-  Setting resource limits to prevent segmentation faults...
-  Memory limits set: Virtual/Physical=40 GB
-  Using 12 threads for PopPUNK.
-  ✅ PopPUNK database created successfully.
-  Fitting PopPUNK model with optimized parameters...
-  ✅ PopPUNK model fitting completed successfully.
-  Model fitting completed. Preparing database for assignment...
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0118.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0066.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0045.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/GCF_003268075_1_Viet_Nam.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/GCA_963562615_1.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0179.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0195.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0086.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/ERS012362.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0038.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0061.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/ERS012307.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/GCA_963562965_1.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0039.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0052.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0186.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0106.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0049.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0085.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/GCA_963570105_1.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/GCA_963561075_1.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0168.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0088.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0126.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/GCA_963565485_1.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/ERS012306.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0005.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/GCA_963565395_1.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0032.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0116.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/GCA_963566625_1.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/GCA_963566695_1.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0192.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0078.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/ERS012312.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0082.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0135.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0140.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0009.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0188.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/GCA_963563065_1.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/ERS012332.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0077.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0174.fasta': 
+  WARNING: Staged file not found for sample '/home/phemarajata/Downloads/bp_finalset/IP-0130.fasta': 
+  Assigning 0 genomes to PopPUNK clusters...
+  Setting resource limits...
+  Memory limits set: Virtual/Physical=48 GB
+  Using 8 threads.
+  ❌ All PopPUNK assignment attempts failed.
 
 Command error:
-  Progress (CPU): 98.8%
-  Progress (CPU): 98.9%
-  Progress (CPU): 99.0%
-  Progress (CPU): 99.1%
-  Progress (CPU): 99.2%
-  Progress (CPU): 99.3%
-  Progress (CPU): 99.4%
-  Progress (CPU): 99.5%
-  Progress (CPU): 99.6%
-  Progress (CPU): 99.7%
-  Progress (CPU): 99.8%
-  Progress (CPU): 99.9%
-  Progress (CPU): 100.0%
-  Progress (CPU): 100.0%
-  Progress (CPU): 100.0%
-  Progress (CPU): 100.0%
-  Progress (CPU): 100.0%
-  Progress (CPU): 100.0%
-  Progress (CPU): 100.0%
-  Progress (CPU): 100.0%
-  
-  Done
-  ✅ PopPUNK database created successfully.
-  Fitting PopPUNK model with optimized parameters...
-  PopPUNK (POPulation Partitioning Using Nucleotide Kmers)
+      names, sequences = [list(r_tuple) for r_tuple in tuples]
+      ^^^^^^^^^^^^^^^^
+  ValueError: not enough values to unpack (expected 2, got 0)
+  PopPUNK: assign
   	(with backend: sketchlib v2.1.4
   	 sketchlib: /opt/conda/envs/poppunk-env/lib/python3.12/site-packages/pp_sketchlib.cpython-312-x86_64-linux-gnu.so)
+  Mode: Assigning clusters of query sequences
   
-  Graph-tools OpenMP parallelisation enabled: with 12 threads
-  Mode: Fitting bgmm model to reference database
   
-  Assigning distances with BGMM model
+  Graph-tools OpenMP parallelisation enabled: with 2 threads
+  Traceback (most recent call last):
+    File "/opt/conda/envs/poppunk-env/bin/poppunk_assign", line 11, in <module>
+      sys.exit(main())
+               ^^^^^^
+    File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/assign.py", line 217, in main
+      assign_query(dbFuncs,
+    File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/assign.py", line 292, in assign_query
+      qNames = constructDatabase(q_files,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/sketchlib.py", line 400, in constructDatabase
+      names, sequences = readRfile(assemblyList)
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/utils.py", line 469, in readRfile
+      names, sequences = [list(r_tuple) for r_tuple in tuples]
+      ^^^^^^^^^^^^^^^^
+  ValueError: not enough values to unpack (expected 2, got 0)
+  PopPUNK: assign
+  	(with backend: sketchlib v2.1.4
+  	 sketchlib: /opt/conda/envs/poppunk-env/lib/python3.12/site-packages/pp_sketchlib.cpython-312-x86_64-linux-gnu.so)
+  Mode: Assigning clusters of query sequences
   
-    0%|          | 0/8 [00:00<?, ?it/s]
-  100%|██████████| 8/8 [00:00<00:00, 81.63it/s]
-  Network summary:
-  	Components				1
-  	Density					0.1316
-  	Transitivity				0.5234
-  	Mean betweenness			0.1997
-  	Weighted-mean betweenness		0.1997
-  	Score					0.4545
-  	Score (w/ betweenness)			0.3637
-  	Score (w/ weighted-betweenness)		0.3637
-  Removing 232 sequences
   
-  Done
-  ✅ PopPUNK model fitting completed successfully.
-  Model fitting completed. Preparing database for assignment...
-  cp: target 'poppunk_db/poppunk_db_clusters.csv' is not a directory
+  Graph-tools OpenMP parallelisation enabled: with 1 threads
+  Traceback (most recent call last):
+    File "/opt/conda/envs/poppunk-env/bin/poppunk_assign", line 11, in <module>
+      sys.exit(main())
+               ^^^^^^
+    File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/assign.py", line 217, in main
+      assign_query(dbFuncs,
+    File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/assign.py", line 292, in assign_query
+      qNames = constructDatabase(q_files,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/sketchlib.py", line 400, in constructDatabase
+      names, sequences = readRfile(assemblyList)
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+    File "/opt/conda/envs/poppunk-env/lib/python3.12/site-packages/PopPUNK/utils.py", line 469, in readRfile
+      names, sequences = [list(r_tuple) for r_tuple in tuples]
+      ^^^^^^^^^^^^^^^^
+  ValueError: not enough values to unpack (expected 2, got 0)
+  ❌ All PopPUNK assignment attempts failed.
 
 Work dir:
-  /home/phemarajata/combined_poppunk_poppipe/work/8f/e8d31e886a398c177c7ed7edc99f1a
+  /home/phemarajata/combined_poppunk_poppipe/work/88/c7bba87bcde5e9640674e959fcc981
 
 Container:
   staphb/poppunk:2.7.5
 
-Tip: you can try to figure out what's wrong by changing to the process work dir and showing the script file named `.command.sh`
-Jul-06 12:17:25.085 [TaskFinalizer-8] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+Jul-06 12:24:53.002 [TaskFinalizer-4] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
 java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Object)" because "this.writer" is null
 	at nextflow.trace.TraceFileObserver.onProcessComplete(TraceFileObserver.groovy:270)
 	at nextflow.Session$_notifyTaskComplete_lambda34.doCall(Session.groovy:1063)
@@ -1011,11 +974,11 @@ java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.send(Ob
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:842)
-Jul-06 12:17:25.086 [TaskFinalizer-8] DEBUG nextflow.Session - Session aborted -- Cause: Process `POPPUNK_MODEL (poppunk_model on $(basename ${sub_list} .list))` terminated with an error exit status (1)
-Jul-06 12:17:25.089 [main] DEBUG nextflow.Session - Session await > all processes finished
-Jul-06 12:17:25.106 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local) - terminating tasks monitor poll loop
-Jul-06 12:17:25.106 [main] DEBUG nextflow.Session - Session await > all barriers passed
-Jul-06 12:17:25.109 [main] INFO  nextflow.script.BaseScript - 
+Jul-06 12:24:53.005 [TaskFinalizer-4] DEBUG nextflow.Session - Session aborted -- Cause: Process `POPPUNK_ASSIGN (poppunk_assign on $(wc -l < valid_files.list) samples)` terminated with an error exit status (1)
+Jul-06 12:24:53.007 [main] DEBUG nextflow.Session - Session await > all processes finished
+Jul-06 12:24:53.065 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Jul-06 12:24:53.065 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local) - terminating tasks monitor poll loop
+Jul-06 12:24:53.068 [main] INFO  nextflow.script.BaseScript - 
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    COMBINED POPPUNK + POPPIPE PIPELINE                       ║
 ║                                 COMPLETED                                    ║
@@ -1031,9 +994,9 @@ Jul-06 12:17:25.109 [main] INFO  nextflow.script.BaseScript -
 ║ - Summary reports: summary/pipeline_summary.txt                             ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-Jul-06 12:17:25.121 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=4; failedCount=4; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=3; abortedCount=0; succeedDuration=2m 48s; failedDuration=18m 23s; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=1; peakCpus=16; peakMemory=40 GB; ]
-Jul-06 12:17:25.121 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow completed -- saving trace file
-Jul-06 12:17:25.121 [main] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.await()" because "this.writer" is null
+Jul-06 12:24:53.073 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=4; ignoredCount=0; cachedCount=5; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=3; abortedCount=0; succeedDuration=0ms; failedDuration=3m 11s; cachedDuration=7m 32s;loadCpus=0; loadMemory=0; peakRunning=1; peakCpus=8; peakMemory=48 GB; ]
+Jul-06 12:24:53.073 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow completed -- saving trace file
+Jul-06 12:24:53.073 [main] DEBUG nextflow.Session - Cannot invoke "groovyx.gpars.agent.Agent.await()" because "this.writer" is null
 java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.await()" because "this.writer" is null
 	at nextflow.trace.TraceFileObserver.onFlowComplete(TraceFileObserver.groovy:221)
 	at nextflow.Session$_notifyFlowComplete_lambda45.doCall(Session.groovy:1107)
@@ -1046,8 +1009,8 @@ java.lang.NullPointerException: Cannot invoke "groovyx.gpars.agent.Agent.await()
 	at nextflow.cli.CmdRun.run(CmdRun.groovy:379)
 	at nextflow.cli.Launcher.run(Launcher.groovy:513)
 	at nextflow.cli.Launcher.main(Launcher.groovy:673)
-Jul-06 12:17:25.122 [main] DEBUG nextflow.trace.ReportObserver - Workflow completed -- rendering execution report
-Jul-06 12:17:25.798 [main] WARN  nextflow.trace.ReportObserver - Failed to render execution report -- see the log file for details
+Jul-06 12:24:53.074 [main] DEBUG nextflow.trace.ReportObserver - Workflow completed -- rendering execution report
+Jul-06 12:24:53.732 [main] WARN  nextflow.trace.ReportObserver - Failed to render execution report -- see the log file for details
 nextflow.exception.AbortOperationException: Report file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/execution_report_local.html -- enable the 'report.overwrite' option in your config file to overwrite existing files
 	at nextflow.trace.TraceHelper.newFileWriter(TraceHelper.groovy:67)
 	at nextflow.trace.ReportObserver.renderHtml(ReportObserver.groovy:284)
@@ -1072,8 +1035,8 @@ Caused by: java.nio.file.FileAlreadyExistsException: /home/phemarajata/Downloads
 	at java.base/java.nio.file.Files.newBufferedWriter(Files.java:3008)
 	at nextflow.trace.TraceHelper.newFileWriter(TraceHelper.groovy:64)
 	... 12 common frames omitted
-Jul-06 12:17:25.799 [main] DEBUG nextflow.trace.TimelineObserver - Workflow completed -- rendering execution timeline
-Jul-06 12:17:25.854 [main] WARN  nextflow.trace.TimelineObserver - Failed to render execution timeline -- see the log file for details
+Jul-06 12:24:53.732 [main] DEBUG nextflow.trace.TimelineObserver - Workflow completed -- rendering execution timeline
+Jul-06 12:24:53.776 [main] WARN  nextflow.trace.TimelineObserver - Failed to render execution timeline -- see the log file for details
 nextflow.exception.AbortOperationException: Timeline file already exists: /home/phemarajata/Downloads/bp_finalset/combined_results/reports/timeline_local.html -- enable the 'timeline.overwrite' option in your config file to overwrite existing files
 	at nextflow.trace.TraceHelper.newFileWriter(TraceHelper.groovy:67)
 	at nextflow.trace.TimelineObserver.renderHtml(TimelineObserver.groovy:178)
@@ -1098,5 +1061,5 @@ Caused by: java.nio.file.FileAlreadyExistsException: /home/phemarajata/Downloads
 	at java.base/java.nio.file.Files.newBufferedWriter(Files.java:3008)
 	at nextflow.trace.TraceHelper.newFileWriter(TraceHelper.groovy:64)
 	... 12 common frames omitted
-Jul-06 12:17:25.900 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
-Jul-06 12:17:25.928 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
+Jul-06 12:24:53.806 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Jul-06 12:24:53.813 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

@@ -1,9 +1,0 @@
-Sketching 21 valid FASTA files...
-First few files to be processed:
-genome_cluster1_1.fasta
-genome_cluster1_2.fasta
-genome_cluster1_3.fasta
-genome_cluster1_4.fasta
-genome_cluster1_5.fasta
-All files verified. Starting MASH sketching...
-MASH sketching completed successfully!

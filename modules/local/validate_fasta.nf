@@ -60,10 +60,12 @@ for fasta_file in fasta_files:
     except Exception as e:
         invalid_files.append(f"{fasta_file}: Error reading file - {str(e)}")
 
-# Write valid files list with absolute paths
+# Write valid files list with sample names and absolute paths (TSV format)
 with open('valid_files.list', 'w') as f:
     for valid_file in valid_files:
-        f.write(f"{valid_file}\\n")
+        # Extract sample name from filename (remove extension)
+        sample_name = Path(valid_file).stem
+        f.write(f"{sample_name}\\t{valid_file}\\n")
 
 # Write validation report
 with open('validation_report.txt', 'w') as f:
@@ -74,9 +76,10 @@ with open('validation_report.txt', 'w') as f:
     f.write(f"Invalid files: {len(invalid_files)}\\n\\n")
     
     if valid_files:
-        f.write("Valid files (with absolute paths):\\n")
+        f.write("Valid files (sample_name -> absolute_path):\\n")
         for vf in valid_files:
-            f.write(f"  ✓ {vf}\\n")
+            sample_name = Path(vf).stem
+            f.write(f"  ✓ {sample_name} -> {vf}\\n")
         f.write("\\n")
     
     if invalid_files:

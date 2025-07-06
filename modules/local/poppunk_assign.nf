@@ -38,12 +38,12 @@ process POPPUNK_ASSIGN {
     echo "Memory limits set: Virtual/Physical=${task.memory}"
     echo "Using ${task.cpus} threads."
 
-    # Run PopPUNK assignment with fallbacks. The --no-plot flag has been removed as it is invalid.
-    if poppunk_assign --db "${db_dir}" --query staged_all_files.list --output poppunk_full --threads ${task.cpus} ${params.poppunk_retain_failures ? '--retain-failures' : ''}; then
+    # Run PopPUNK assignment with fallbacks using correct v2.7.5 syntax
+    if poppunk --assign-query --db "${db_dir}" --query staged_all_files.list --output poppunk_full --threads ${task.cpus} ${params.poppunk_retain_failures ? '--retain-failures' : ''}; then
         echo "✅ PopPUNK assignment completed successfully."
-    elif poppunk_assign --db "${db_dir}" --query staged_all_files.list --output poppunk_full --threads 2 ${params.poppunk_retain_failures ? '--retain-failures' : ''}; then
+    elif poppunk --assign-query --db "${db_dir}" --query staged_all_files.list --output poppunk_full --threads 2 ${params.poppunk_retain_failures ? '--retain-failures' : ''}; then
         echo "✅ PopPUNK assignment completed with reduced threads."
-    elif poppunk_assign --db "${db_dir}" --query staged_all_files.list --output poppunk_full --threads 1 ${params.poppunk_retain_failures ? '--retain-failures' : ''}; then
+    elif poppunk --assign-query --db "${db_dir}" --query staged_all_files.list --output poppunk_full --threads 1 ${params.poppunk_retain_failures ? '--retain-failures' : ''}; then
         echo "✅ PopPUNK assignment completed with minimal settings."
     else
         echo "❌ All PopPUNK assignment attempts failed."
@@ -51,12 +51,20 @@ process POPPUNK_ASSIGN {
     fi
 
     # Locate the definitive output cluster file and copy it
+    # In v2.7.5, the output file is typically named differently
     ASSIGN_CSV="poppunk_full/poppunk_full_clusters.csv"
+    ALT_ASSIGN_CSV="poppunk_full/poppunk_full_external_clusters.csv"
+    
     if [ -f "\$ASSIGN_CSV" ]; then
         cp "\$ASSIGN_CSV" full_assign.csv
-        echo "Final assignment file 'full_assign.csv' created."
+        echo "Final assignment file 'full_assign.csv' created from \$ASSIGN_CSV."
+    elif [ -f "\$ALT_ASSIGN_CSV" ]; then
+        cp "\$ALT_ASSIGN_CSV" full_assign.csv
+        echo "Final assignment file 'full_assign.csv' created from \$ALT_ASSIGN_CSV."
     else
-        echo "ERROR: PopPUNK assignment finished, but the output file (\$ASSIGN_CSV) was not found."
+        echo "ERROR: PopPUNK assignment finished, but no output file was found."
+        echo "Checked for: \$ASSIGN_CSV and \$ALT_ASSIGN_CSV"
+        ls -la poppunk_full/
         # Create a minimal file to prevent the pipeline from crashing, but log the error
         echo "sample,cluster" > full_assign.csv
         echo "no_sample,assignment_failed" >> full_assign.csv
