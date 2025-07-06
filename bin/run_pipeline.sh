@@ -250,6 +250,17 @@ fi
 # Create output directory
 mkdir -p "$OUTPUT_DIR"
 
+# Clean up existing reports to prevent conflicts
+print_status "Cleaning up existing reports..."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -f "$SCRIPT_DIR/cleanup_reports.sh" ]]; then
+    "$SCRIPT_DIR/cleanup_reports.sh" "$OUTPUT_DIR"
+else
+    # Fallback cleanup
+    mkdir -p "$OUTPUT_DIR/reports"
+    rm -f "$OUTPUT_DIR/reports"/*.html "$OUTPUT_DIR/reports"/*.txt 2>/dev/null || true
+fi
+
 print_status "Starting pipeline execution..."
 print_status "Command: $NF_CMD"
 echo

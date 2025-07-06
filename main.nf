@@ -59,11 +59,20 @@ workflow {
         println "="*50 + "\n"
     }
     
-    // Filter the original FASTA files based on validation results
+    // Extract valid file paths from the validation results
+    // The valid_list contains TSV format: sample_name\tfile_path
     valid_files_ch = validation_out.valid_list
         .splitText() { it.trim() }
-        .map { file_path -> file(file_path) }
-        .filter { it.exists() }
+        .filter { it != "" }  // Remove empty lines
+        .map { line -> 
+            def parts = line.split('\t')
+            if (parts.size() >= 2) {
+                return file(parts[1])  // Return the file path (second column)
+            } else {
+                return null
+            }
+        }
+        .filter { it != null && it.exists() }
     
     // Collect valid files for use in multiple processes
     valid_files_collected = valid_files_ch.collect()
@@ -94,52 +103,68 @@ workflow {
     ch_clusters = final_csv
     
     // The h5 database file should be in the poppunk_db directory
-    ch_h5_db = model_out.db.map { db_dir -> 
-        file("${db_dir}/poppunk_db.h5")
-    }
+    ch_h5_db = model_out.db
     
     // Read clusters and filter by minimum cluster size
-    ch_strain_ids = ch_clusters
+    // First, let's collect all cluster IDs and their counts
+    ch_cluster_counts = ch_clusters
         .splitCsv(header: true)
         .map { row -> row.Cluster ?: row.cluster }
-        .groupTuple()
-        .map { cluster_id, samples -> 
-            [cluster_id, samples.size()]
+        .collect()
+        .map { cluster_list ->
+            // Count occurrences of each cluster
+            def cluster_counts = [:]
+            cluster_list.each { cluster ->
+                cluster_counts[cluster] = (cluster_counts[cluster] ?: 0) + 1
+            }
+            // Filter clusters by minimum size and return list of valid cluster IDs
+            return cluster_counts.findAll { cluster, count -> 
+                count >= params.min_cluster_size 
+            }.keySet().toList()
         }
-        .filter { cluster_id, size -> 
-            size >= params.min_cluster_size 
-        }
-        .map { cluster_id, size -> cluster_id }
     
     // Split strains for each cluster that meets minimum size
     strain_files = SPLIT_STRAINS(
         ch_rfile,
         ch_clusters,
-        ch_strain_ids.collect()
+        ch_cluster_counts
     )
     
     // Process each strain through the PopPIPE pipeline
-    strain_files.strain_data
-        .transpose()
-        .set { ch_strain_processing }
+    // Create channels for rfiles and names files with strain IDs
+    ch_strain_rfiles = strain_files.strain_data
+        .flatten()
+        .map { rfile_path ->
+            // Extract strain ID from path like "strains/1/rfile.txt"
+            def strain_id = rfile_path.parent.name
+            return [strain_id, rfile_path]
+        }
     
-    // Calculate distances for each strain
+    ch_strain_names = strain_files.strain_names
+        .flatten()
+        .map { names_path ->
+            // Extract strain ID from path like "strains/1/names.txt"
+            def strain_id = names_path.parent.name
+            return [strain_id, names_path]
+        }
+    
+    // Calculate distances for each strain (needs names.txt)
     strain_dists = SKETCHLIB_DISTS(
         ch_h5_db,
-        ch_strain_processing
+        ch_strain_names
     )
     
     // Generate neighbor-joining trees
     nj_trees = GENERATE_NJ(strain_dists)
     
-    // Build SKA files for alignment
-    ska_files = SKA_BUILD(ch_strain_processing)
+    // Build SKA files for alignment (needs rfile.txt and FASTA files)
+    ska_files = SKA_BUILD(ch_strain_rfiles, valid_files_collected)
     
     // Create alignments
     alignments = SKA_ALIGN(ska_files)
     
     // Create mappings for Gubbins
-    mappings = SKA_MAP(ska_files, ch_strain_processing)
+    mappings = SKA_MAP(ska_files, ch_strain_rfiles, valid_files_collected)
     
     // Generate ML trees with IQ-TREE
     ml_trees = IQ_TREE(nj_trees, alignments, ch_rfile)

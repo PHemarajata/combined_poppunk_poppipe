@@ -39,11 +39,11 @@ process POPPUNK_ASSIGN {
     echo "Using ${task.cpus} threads."
 
     # Run PopPUNK assignment with fallbacks using correct v2.7.5 syntax
-    if poppunk --assign-query --db "${db_dir}" --query staged_all_files.list --output poppunk_full --threads ${task.cpus} ${params.poppunk_retain_failures ? '--retain-failures' : ''}; then
+    if poppunk --use-model --ref-db "${db_dir}" --r-files staged_all_files.list --output poppunk_full --threads ${task.cpus} ${params.poppunk_retain_failures ? '--retain-failures' : ''}; then
         echo "✅ PopPUNK assignment completed successfully."
-    elif poppunk --assign-query --db "${db_dir}" --query staged_all_files.list --output poppunk_full --threads 2 ${params.poppunk_retain_failures ? '--retain-failures' : ''}; then
+    elif poppunk --use-model --ref-db "${db_dir}" --r-files staged_all_files.list --output poppunk_full --threads 2 ${params.poppunk_retain_failures ? '--retain-failures' : ''}; then
         echo "✅ PopPUNK assignment completed with reduced threads."
-    elif poppunk --assign-query --db "${db_dir}" --query staged_all_files.list --output poppunk_full --threads 1 ${params.poppunk_retain_failures ? '--retain-failures' : ''}; then
+    elif poppunk --use-model --ref-db "${db_dir}" --r-files staged_all_files.list --output poppunk_full --threads 1 ${params.poppunk_retain_failures ? '--retain-failures' : ''}; then
         echo "✅ PopPUNK assignment completed with minimal settings."
     else
         echo "❌ All PopPUNK assignment attempts failed."
