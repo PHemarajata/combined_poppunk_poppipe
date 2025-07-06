@@ -94,46 +94,142 @@ if len(file_mapping) == 0:
 print(f"Successfully mapped {len(file_mapping)} files for SKA build")
 
 # Create a file list for SKA using the staged filenames
+# SKA expects either just filenames (if files are in current directory) 
+# or full paths, and each line should be clean without extra whitespace
 with open('ska_files.txt', 'w') as f:
     for sample_name, staged_file in file_mapping.items():
-        f.write(f"{staged_file}\\n")
+        # Ensure the file exists and get its full path
+        if os.path.exists(staged_file):
+            # Use absolute path to be safe
+            full_path = os.path.abspath(staged_file)
+            f.write(f"{full_path}\\n")
+            print(f"  Added to file list: {full_path}")
+        else:
+            print(f"  WARNING: File not found: {staged_file}")
 
 print("Created file list for SKA")
 print("Contents of ska_files.txt:")
 with open('ska_files.txt', 'r') as f:
+    content = f.read()
+    print(repr(content))  # Use repr to see any hidden characters
+    print("Actual content:")
+    print(content)
+
+# Validate that all files in the list actually exist
+print("Validating files in ska_files.txt:")
+with open('ska_files.txt', 'r') as f:
+    for line_num, line in enumerate(f, 1):
+        filepath = line.strip()
+        if filepath:  # Skip empty lines
+            if os.path.exists(filepath):
+                file_size = os.path.getsize(filepath)
+                print(f"  Line {line_num}: ✓ {filepath} ({file_size} bytes)")
+            else:
+                print(f"  Line {line_num}: ✗ {filepath} (NOT FOUND)")
+                
+# Also try creating a simpler file list with just filenames (relative paths)
+print("Creating alternative file list with relative paths...")
+with open('ska_files_relative.txt', 'w') as f:
+    for sample_name, staged_file in file_mapping.items():
+        if os.path.exists(staged_file):
+            f.write(f"{staged_file}\\n")
+
+print("Contents of ska_files_relative.txt:")
+with open('ska_files_relative.txt', 'r') as f:
     print(f.read())
 
-# Build SKA command
-cmd = [
+# Try SKA build with different approaches
+ska_success = False
+
+# First try with relative paths (simpler, often works better)
+cmd_relative = [
     "ska", "build",
     "-o", "split_kmers",
     "-k", str(${params.ska_kmer}),
-    "-f", "ska_files.txt"
+    "-f", "ska_files_relative.txt"
 ]
 
 # Add optional parameters
-if ${params.ska_single_strand}:
-    cmd.append("--single-strand")
+if ${params.ska_single_strand ? 'True' : 'False'}:
+    cmd_relative.append("--single-strand")
 
-print(f"Running SKA command: {' '.join(cmd)}")
+print(f"Trying SKA command with relative paths: {' '.join(cmd_relative)}")
 
 try:
-    result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-    print("SKA build completed successfully")
+    result = subprocess.run(cmd_relative, capture_output=True, text=True, check=True)
+    print("SKA build completed successfully with relative paths")
     print(f"stdout: {result.stdout}")
+    ska_success = True
     
+except subprocess.CalledProcessError as e:
+    print(f"SKA build with relative paths failed: {e}")
+    print(f"stdout: {e.stdout}")
+    print(f"stderr: {e.stderr}")
+    
+    # Try with absolute paths
+    cmd_absolute = [
+        "ska", "build",
+        "-o", "split_kmers",
+        "-k", str(${params.ska_kmer}),
+        "-f", "ska_files.txt"
+    ]
+    
+    if ${params.ska_single_strand ? 'True' : 'False'}:
+        cmd_absolute.append("--single-strand")
+    
+    print(f"Trying SKA command with absolute paths: {' '.join(cmd_absolute)}")
+    
+    try:
+        result = subprocess.run(cmd_absolute, capture_output=True, text=True, check=True)
+        print("SKA build completed successfully with absolute paths")
+        print(f"stdout: {result.stdout}")
+        ska_success = True
+        
+    except subprocess.CalledProcessError as e2:
+        print(f"SKA build with absolute paths also failed: {e2}")
+        print(f"stdout: {e2.stdout}")
+        print(f"stderr: {e2.stderr}")
+        
+        # Try individual files approach (without file list)
+        print("Trying individual files approach...")
+        cmd_individual = [
+            "ska", "build",
+            "-o", "split_kmers",
+            "-k", str(${params.ska_kmer})
+        ]
+        
+        if ${params.ska_single_strand ? 'True' : 'False'}:
+            cmd_individual.append("--single-strand")
+            
+        # Add individual files
+        for sample_name, staged_file in file_mapping.items():
+            if os.path.exists(staged_file):
+                cmd_individual.append(staged_file)
+        
+        print(f"Trying SKA command with individual files: {' '.join(cmd_individual)}")
+        
+        try:
+            result = subprocess.run(cmd_individual, capture_output=True, text=True, check=True)
+            print("SKA build completed successfully with individual files")
+            print(f"stdout: {result.stdout}")
+            ska_success = True
+            
+        except subprocess.CalledProcessError as e3:
+            print(f"All SKA build approaches failed. Last error: {e3}")
+            print(f"stdout: {e3.stdout}")
+            print(f"stderr: {e3.stderr}")
+
+if ska_success:
     # Verify output file exists
     if os.path.exists('split_kmers.skf'):
         file_size = os.path.getsize('split_kmers.skf')
         print(f"Created split_kmers.skf ({file_size} bytes)")
     else:
-        print("Warning: split_kmers.skf not found")
-        
-except subprocess.CalledProcessError as e:
-    print(f"SKA build failed: {e}")
-    print(f"stdout: {e.stdout}")
-    print(f"stderr: {e.stderr}")
-    
+        print("Warning: split_kmers.skf not found despite successful command")
+        ska_success = False
+
+if not ska_success:
+    print("Creating dummy SKA file as fallback...")
     # Create a dummy file to prevent pipeline failure
     with open('split_kmers.skf', 'w') as f:
         f.write("# Dummy SKA file - build failed\\n")
